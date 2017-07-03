@@ -372,7 +372,6 @@ local function job_submission(job_desc, part_list, submit_uid)
    local princeUtils = require "princeUtils"
    local princeUsers = require "princeUsers"
    local princeJob = require "princeJob"
-   -- local princeQoS = require "princeQoS"
    
    local slurm_log = princeUtils.slurm_log
    local user_log = princeUtils.user_log
