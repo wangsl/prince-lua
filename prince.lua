@@ -2,6 +2,8 @@
 
 local prince = { }
 
+-- to clean prince.lua
+
 --local princeUtils = require "princeUtils"
 --local princeJob = require "princeJob"
 --local princeUsers = require "princeUsers"
