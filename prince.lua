@@ -378,10 +378,6 @@ local function job_submission(job_desc, part_list, submit_uid)
    local slurm_log = princeUtils.slurm_log
    local user_log = princeUtils.user_log
    
-   -- slurm_log("Lua plugin for Prince job submission with Lua verison %s", _VERSION)
-
-   -- if not princeUsers.uid_is_valid(submit_uid) then return slurm.ERROR end
-   
    if princeUsers.netid_is_blocked(submit_uid) then return slurm.ERROR end
    
    princeJob.setup_parameters{job_desc = job_desc}

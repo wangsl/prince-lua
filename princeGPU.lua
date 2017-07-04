@@ -119,14 +119,18 @@ local function assign_partitions()
    return partitions_
 end
 
-local function partitions_are_valid(partitions)
-   if partitions == nil then
+local function partitions_are_valid(partitions_)
+   if partitions_ == nil then
       user_log("No GPU partitions defined")
       return false
    else
-      for _, part_name in pairs(princeUtils.split(partitions, ",")) do
+      for _, part_name in pairs(princeUtils.split(partitions_, ",")) do
+	 if not princeUtils.in_table(partitions, part_name) then
+	    user_log("Partition '%s' is not available for GPU jobs", part_name)
+	    return false
+	 end
 	 if not partition_is_valid(part_name) then
-	    user_log("Partition '%s' is not valid for this job", part_name)
+	    user_log("Partition '%s' is not valid for this GPU job", part_name)
 	    return false
 	 end
       end

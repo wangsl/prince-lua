@@ -23,6 +23,8 @@ local job_desc = nil
 
 local n_cpus_per_node = nil
 
+local gpu_job = false
+
 local function memory_is_specified(mem)
    if mem == nil or mem > bigIntNumber then
       return false
@@ -62,6 +64,27 @@ local function print_job_desc()
    if job_desc.partition ~= nil then
       slurm_log("partitions: %s", job_desc.partition)
    end
+
+   if job_desc.gres ~= nil then
+      slurm_log("gres: %s", job_desc.gres)
+   end
+end
+
+local function setup_gpu_jobs()
+   local gpu_type = nil
+   local gpus = 0
+   if job_desc.gres ~= nil then
+      gpu_type, gpus = princeGPU.gres_for_gpu(job_desc.gres)
+   end
+
+   if gpus > 0 then
+      gpu_job = true
+      princeGPU.setup_parameters{ gpus = gpus, cpus = n_cpus_per_node,
+				  memory = job_desc.pn_min_memory,
+				  gpu_type = gpu_type }
+   else
+      gpu_job = false
+   end
 end
 
 local function set_default_compute_resources()
@@ -94,6 +117,12 @@ local function assign_cpu_partitions()
    job_desc.partition = princeCPU.assign_partitions()
 end
 
+local function assign_gpu_partitions()
+   if job_desc.partition ~= nil then return end
+   job_desc.partition = princeGPU.assign_partitions()
+end
+
+
 local function assign_qos()
    local netid = princeUsers.nyu_netid()
    princeQoS.setup_parameters{time_limit = job_desc.time_limit, user_netid = netid}
@@ -103,8 +132,17 @@ local function assign_qos()
 end
 
 local function compute_resources_are_valid()
-   --if not wall_time_is_valid() then return false end
+
+   -- check QoS
    if not princeQoS.qos_is_valid(job_desc.qos) then return false end
+
+   -- check partitions
+   if gpu_job then
+      if not princeGPU.partitions_are_valid(job_desc.partition) then return false end
+   else
+      if not princeCPU.partitions_are_valid(job_desc.partition) then return false end
+   end
+   
    return true
 end
 				   
@@ -112,7 +150,15 @@ local function setup_routings()
    print_job_desc()
    
    set_default_compute_resources()
-   assign_cpu_partitions()
+
+   setup_gpu_jobs()
+
+   if gpu_job then
+      assign_gpu_partitions()
+   else
+      assign_cpu_partitions()
+   end
+
    assign_qos()
 
    print_job_desc()

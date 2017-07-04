@@ -142,7 +142,7 @@ end
 
 function slurm_job_submit(job_desc, part_list, submit_uid)
 
-   if submit_uid == 1015 or submit_uid == 1296493 then
+   if submit_uid == 1015 then --or submit_uid == 1296493 then
       --package.path = ';/opt/slurm/etc/?.lua;' .. package.path
 
       unload_new_updated_packages()
