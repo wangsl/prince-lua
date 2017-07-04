@@ -3,6 +3,7 @@
 local princeCPU = { }
 
 local princeUtils = require "princeUtils"
+local princeUsers = require "princeUsers"
 
 local slurm_log = princeUtils.slurm_log
 local user_log = princeUtils.user_log
@@ -20,42 +21,50 @@ local partition_groups = {
    group_20_62_16 = { partitions = "c26,c27,c28,c29,c30,c31",
 		      min_cpus = 1, max_cpus = 20, max_nodes = 16,
 		      min_memory = 0, max_memory = 62,
-		      min_ave_memory = 0, max_ave_memory = 15
+		      min_ave_memory = 0, max_ave_memory = 15,
+		      users = { }
    },
    
    group_28_125 = { partitions = "c01_17",
 		    min_cpus = 1, max_cpus = 28, max_nodes = 68,
 		    min_memory = 0, max_memory = 125,
 		    min_ave_memory = 0, max_ave_memory = 30,
+		    users = { }
    },
    
    group_28_250 = { partitions = "c18_25",
 		    min_cpus = 1, max_cpus = 28, max_nodes = 32,
 		    min_memory = 0, max_memory = 250,
-		    min_ave_memory = 0, max_ave_memory = 125
+		    min_ave_memory = 0, max_ave_memory = 125,
+		    users = { }
    },	       
    
    group_28 = { partitions = "c01_25",
 		min_cpus = 1, max_cpus = 28, max_nodes = 100,
 		min_memory = 0, max_memory = 125,
-		min_ave_memory = 0, max_ave_memory = 30
+		min_ave_memory = 0, max_ave_memory = 30,
+		users = { }
    },
 
+   --[[
    group_bigmem = { partitions = "bigmem",
 		    min_cpus = 1, max_cpus = 48, max_nodes = 1,
 		    min_memory = 250, max_memory = 1500,
-		    min_ave_memory = 0, max_ave_memory = 1500
+		    min_ave_memory = 0, max_ave_memory = 1500,
+		    users = { "RES", "wang" }
    },
+   --]]
    
    group_bigmem_2 = { partitions = "bigmem",
 		    min_cpus = 1, max_cpus = 48, max_nodes = 1,
 		    min_memory = 50, max_memory = 1500,
-		    min_ave_memory = 50, max_ave_memory = 1500
+		    min_ave_memory = 50, max_ave_memory = 1500,
+		    users = { }
    }
 }
 
 local partition_group_names = { "group_20_62_16", "group_28_125", "group_28", "group_28_250",
-				"group_bigmem", "group_bigmem_2"  }
+				"group_bigmem_2"  }
 
 local function setup_partition_to_partition_group()
    if not princeUtils.is_empty(partition_to_partition_group) then return end
@@ -69,10 +78,14 @@ end
 
 local function fit_into_partition_group(group_name)
    local group = partition_groups[group_name]
-   if group ~= nil and nodes <= group.max_nodes and cpus <= group.max_cpus and
-      group.min_memory <= memory and memory <= group.max_memory and
-      group.min_ave_memory <= ave_memory and ave_memory <= group.max_ave_memory then
-	 return true
+
+   if group ~= nil then
+      if #group.users > 0 and not princeUtils.in_table(group.users, princeUsers.nyu_netid()) then return false end
+      if nodes <= group.max_nodes and cpus <= group.max_cpus and
+	 group.min_memory <= memory and memory <= group.max_memory and
+         group.min_ave_memory <= ave_memory and ave_memory <= group.max_ave_memory then
+	    return true
+      end
    end
    return false
 end

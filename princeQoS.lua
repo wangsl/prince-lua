@@ -36,7 +36,7 @@ local qos_all = {
    sysadm = {
       time_min = 0,
       time_max = seven_days,
-      users = { "RES" }
+      users = { "RES", "wang" }
    },
    mhealth = {
       time_min = 0,
@@ -82,7 +82,8 @@ local function qos_is_valid(qos_name)
       end
 
       if time_limit <= qos.time_min or time_limit > qos.time_max then
-	 user_log("Job time limit does not match QoS '%s', it should between %d and %d mins, job wall time is %d mins", qos_name, qos.time_min, qos.time_max, time_limit)
+	 user_log("Job time limit does not match QoS '%s', it should between %d and %d mins, job wall time is %d mins",
+		  qos_name, qos.time_min, qos.time_max, time_limit)
 	 return false
       end
       

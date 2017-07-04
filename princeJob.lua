@@ -38,11 +38,13 @@ local function input_compute_resources_are_valid()
       return false
    end
 
-   if job_desc.num_tasks ~= uint32_NO_VAL and job_desc.ntasks_per_node == uint16_NO_VAL then
-      user_log("Plase spcify --nodes= and --tasks-per-node, not --ntasks only")
+   if job_desc.num_tasks ~= uint32_NO_VAL and
+      job_desc.min_nodes == 1 and job_desc.max_nodes == uint32_NO_VAL and
+      job_desc.ntasks_per_node == uint16_NO_VAL then
+      user_log("Plase do not specify --ntasks on prince cluster, try to use --nodes and --tasks-per-node together")
       return false
    end
-   
+      
    return true
 end
 
@@ -55,25 +57,20 @@ local function print_job_desc()
    slurm_log("pn_min_memory: %d", job_desc.pn_min_memory)
    slurm_log("cpus_per_task: %d", job_desc.cpus_per_task)
 
+   slurm_log("min_nodes: %d", job_desc.min_nodes)
+   slurm_log("max_nodes: %d", job_desc.max_nodes)
+   
    if memory_is_specified(job_desc.min_mem_per_cpu) then
       slurm_log("min_mem_per_cpu: %d", job_desc.min_mem_per_cpu)
    end
-
-   if job_desc.qos ~= nil then
-      slurm_log("job_desc.qos: %s", job_desc.qos)
-   end
-
-   if job_desc.mail_user ~= nil then
-      slurm_log("mail_user: %s", job_desc.mail_user)
-   end
-
-   if job_desc.partition ~= nil then
-      slurm_log("partitions: %s", job_desc.partition)
-   end
-
-   if job_desc.gres ~= nil then
-      slurm_log("gres: %s", job_desc.gres)
-   end
+   
+   if job_desc.qos ~= nil then slurm_log("job_desc.qos: %s", job_desc.qos) end
+   
+   if job_desc.mail_user ~= nil then slurm_log("mail_user: %s", job_desc.mail_user) end
+   
+   if job_desc.partition ~= nil then slurm_log("partitions: %s", job_desc.partition) end
+   
+   if job_desc.gres ~= nil then slurm_log("gres: %s", job_desc.gres) end
 end
 
 local function setup_gpu_job()
@@ -82,7 +79,7 @@ local function setup_gpu_job()
    if job_desc.gres ~= nil then
       gpu_type, gpus = princeGPU.gres_for_gpu(job_desc.gres)
    end
-
+   
    if gpus > 0 then
       gpu_job = true
       princeGPU.setup_parameters{ gpus = gpus, cpus = n_cpus_per_node,
@@ -97,9 +94,8 @@ local function set_default_compute_resources()
    if job_desc.time_limit == uint32_NO_VAL then job_desc.time_limit = 60 end
    if job_desc.pn_min_cpus == uint16_NO_VAL then job_desc.pn_min_cpus = 1 end
    if job_desc.cpus_per_task == uint16_NO_VAL then job_desc.cpus_per_task = 1 end
-   if job_desc.ntasks_per_node == uint16_NO_VAL then job_desc.ntasks_per_node = 1 end
 
-   -- if job_desc.num_tasks == uint32_NO_VAL then
+   if job_desc.ntasks_per_node == uint16_NO_VAL then job_desc.ntasks_per_node = 1 end
 
    if not memory_is_specified(job_desc.pn_min_memory) then
       if memory_is_specified(job_desc.min_mem_per_cpu) then
@@ -120,7 +116,6 @@ local function set_default_compute_resources()
 end
 
 local function assign_cpu_partitions()
-   princeCPU.setup_parameters{cpus = n_cpus_per_node, memory = job_desc.pn_min_memory}
    local partitions = princeCPU.assign_partitions()
    if partitions == nil then
       user_log("No proper CPU partitions found")
@@ -146,8 +141,8 @@ local function assign_partitions()
       if n_match == 1 then to_append = true end
    end
 
-   local partitions = nil
    if job_desc.partition == nil or to_append then
+      local partitions = nil
       if gpu_job then
 	 partitions = assign_gpu_partitions()
       else
@@ -158,7 +153,11 @@ local function assign_partitions()
 	 partitions = specified_partitions .. "," .. partitions
       end
 
-      job_desc.partition = partitions
+      if partitions ~= nil then
+	 job_desc.partition = partitions
+      else
+	 user_log("No proper partition found")
+      end
    end
 end
 
@@ -171,7 +170,6 @@ local function assign_qos()
 end
 
 local function compute_resources_are_valid()
-
    -- check QoS
    if not princeQoS.qos_is_valid(job_desc.qos) then return false end
 
@@ -181,7 +179,7 @@ local function compute_resources_are_valid()
    else
       if not princeCPU.partitions_are_valid(job_desc.partition) then return false end
    end
-   
+
    return true
 end
 				   
@@ -191,6 +189,12 @@ local function setup_routings()
    set_default_compute_resources()
 
    setup_gpu_job()
+
+   if not gpu_job then
+      princeCPU.setup_parameters{cpus = n_cpus_per_node,
+				 memory = job_desc.pn_min_memory,
+				 nodes = job_desc.min_nodes }
+   end
 
    assign_partitions()
 

@@ -151,7 +151,6 @@ local function setup_compute_resources(args)
    cpus = args.cpus or 1
    memory = args.memory/1024 or 2 -- in GB
    gpu_type = args.gpu_type or nil
-   --netid = args.netid
    gpu_type_is_valid(gpu_type)
 end
 

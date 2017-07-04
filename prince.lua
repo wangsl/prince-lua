@@ -17,7 +17,7 @@ local function job_submission(job_desc, part_list, submit_uid)
 
    if not princeJob.input_compute_resources_are_valid() then return slurm.ERROR end
    
-   princeJob.setup_routings()
+   princeJob.setup_routings() 
 
    if not princeJob.compute_resources_are_valid() then return slurm.ERROR end
 
