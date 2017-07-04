@@ -31,7 +31,7 @@ local qos_all = {
    qos168plus = {
       time_min = two_days,
       time_max = seven_days,
-      users = { "RES", "sw77" }
+      users = { "RES" }
    },
    sysadm = {
       time_min = 0,

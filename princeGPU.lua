@@ -3,6 +3,7 @@
 local princeGPU = { }
 
 local princeUtils = require "princeUtils"
+local princeUsers = require "princeUsers"
 
 local slurm_log = princeUtils.slurm_log
 local user_log = princeUtils.user_log
@@ -19,6 +20,7 @@ local available_gpu_types = { "k80", "p1080"  }
 local partition_configures = {
    
    k80_4 = { gpu = "k80",
+	     users = { },
 	     { gpus = 1, max_cpus = 7,  max_memory = 100 },
 	     { gpus = 2, max_cpus = 14, max_memory = 150 },
 	     { gpus = 3, max_cpus = 21, max_memory = 200 },
@@ -26,6 +28,7 @@ local partition_configures = {
    },
    
    k80_8 = { gpu = "k80",
+	     users = { },
 	     { gpus = 1, max_cpus = 1, max_memory = 15 },
 	     { gpus = 2, max_cpus = 2, max_memory = 30 },
 	     { gpus = 3, max_cpus = 3, max_memory = 45 },
@@ -37,6 +40,7 @@ local partition_configures = {
    },
    
    p1080_4 = { gpu = "p1080",
+	       users = { },
 	       { gpus = 1, max_cpus = 7,  max_memory = 50 },
 	       { gpus = 2, max_cpus = 14, max_memory = 75 },
 	       { gpus = 3, max_cpus = 21, max_memory = 100 },
@@ -93,6 +97,10 @@ local function fit_into_partition(part_name)
    local partition_conf = partition_configures[part_name]
    if partition_conf ~= nil then
       if gpu_type ~= nil and gpu_type ~= partition_conf.gpu then return false end
+      if #partition_conf.users > 0 and not princeUtils.in_table(partition_conf.users, princeUsers.nyu_netid()) then
+	 return false
+      end
+
       local conf = partition_conf[gpus]
       if conf ~= nil and cpus <= conf.max_cpus and memory <= conf.max_memory then
 	 return true
@@ -143,6 +151,7 @@ local function setup_compute_resources(args)
    cpus = args.cpus or 1
    memory = args.memory/1024 or 2 -- in GB
    gpu_type = args.gpu_type or nil
+   --netid = args.netid
    gpu_type_is_valid(gpu_type)
 end
 

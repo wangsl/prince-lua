@@ -32,11 +32,17 @@ local function memory_is_specified(mem)
    return true
 end
 
-local function wall_time_is_valid()
+local function input_compute_resources_are_valid()
    if job_desc.time_limit ~= uint32_NO_VAL and job_desc.time_limit > princeUtils.seven_days then
       user_log("Maximum wall time is %d days", princeUtils.seven_days/60/24)
       return false
    end
+
+   if job_desc.num_tasks ~= uint32_NO_VAL and job_desc.ntasks_per_node == uint16_NO_VAL then
+      user_log("Plase spcify --nodes= and --tasks-per-node, not --ntasks only")
+      return false
+   end
+   
    return true
 end
 
@@ -70,7 +76,7 @@ local function print_job_desc()
    end
 end
 
-local function setup_gpu_jobs()
+local function setup_gpu_job()
    local gpu_type = nil
    local gpus = 0
    if job_desc.gres ~= nil then
@@ -93,6 +99,8 @@ local function set_default_compute_resources()
    if job_desc.cpus_per_task == uint16_NO_VAL then job_desc.cpus_per_task = 1 end
    if job_desc.ntasks_per_node == uint16_NO_VAL then job_desc.ntasks_per_node = 1 end
 
+   -- if job_desc.num_tasks == uint32_NO_VAL then
+
    if not memory_is_specified(job_desc.pn_min_memory) then
       if memory_is_specified(job_desc.min_mem_per_cpu) then
 	 job_desc.pn_min_memory = job_desc.min_mem_per_cpu
@@ -112,18 +120,46 @@ local function set_default_compute_resources()
 end
 
 local function assign_cpu_partitions()
-   if job_desc.partition ~= nil then return end
    princeCPU.setup_parameters{cpus = n_cpus_per_node, memory = job_desc.pn_min_memory}
-   job_desc.partition = princeCPU.assign_partitions()
+   local partitions = princeCPU.assign_partitions()
+   if partitions == nil then
+      user_log("No proper CPU partitions found")
+   end
+   return partitions
 end
 
 local function assign_gpu_partitions()
-   if job_desc.partition ~= nil then return end
-   local partition = princeGPU.assign_partitions()
-   if partition == nil then
-      user_log("No proper GPU partition found")
+   local partitions = princeGPU.assign_partitions()
+   if partitions == nil then
+      user_log("No proper GPU partitions found")
    end
-   job_desc.partition = princeGPU.assign_partitions()
+   return partitions
+end
+
+local function assign_partitions()
+   local specified_partitions = nil
+   local to_append = false
+
+   if job_desc.partition ~= nil then
+      local n_match = nil
+      specified_partitions, n_match = string.gsub(job_desc.partition, ",...$", "")
+      if n_match == 1 then to_append = true end
+   end
+
+   local partitions = nil
+   if job_desc.partition == nil or to_append then
+      if gpu_job then
+	 partitions = assign_gpu_partitions()
+      else
+	 partitions = assign_cpu_partitions()
+      end
+
+      if to_append and partitions ~= nil then
+	 partitions = specified_partitions .. "," .. partitions
+      end
+
+      job_desc.partition = partitions
+   end
 end
 
 local function assign_qos()
@@ -154,13 +190,9 @@ local function setup_routings()
    
    set_default_compute_resources()
 
-   setup_gpu_jobs()
+   setup_gpu_job()
 
-   if gpu_job then
-      assign_gpu_partitions()
-   else
-      assign_cpu_partitions()
-   end
+   assign_partitions()
 
    assign_qos()
 
@@ -174,13 +206,9 @@ end
 -- functions
 
 princeJob.setup_parameters = setup_parameters
+princeJob.input_compute_resources_are_valid = input_compute_resources_are_valid 
 princeJob.compute_resources_are_valid = compute_resources_are_valid
-
-princeJob.wall_time_is_valid = wall_time_is_valid
 
 princeJob.setup_routings = setup_routings
 
 return princeJob
-
-
-

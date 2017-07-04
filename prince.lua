@@ -14,9 +14,9 @@ local function job_submission(job_desc, part_list, submit_uid)
    if princeUsers.netid_is_blocked(submit_uid) then return slurm.ERROR end
    
    princeJob.setup_parameters{job_desc = job_desc}
-   
-   if not princeJob.wall_time_is_valid() then return slurm.ERROR end
 
+   if not princeJob.input_compute_resources_are_valid() then return slurm.ERROR end
+   
    princeJob.setup_routings()
 
    if not princeJob.compute_resources_are_valid() then return slurm.ERROR end
