@@ -119,9 +119,12 @@ end
 
 local function assign_gpu_partitions()
    if job_desc.partition ~= nil then return end
+   local partition = princeGPU.assign_partitions()
+   if partition == nil then
+      user_log("No proper GPU partition found")
+   end
    job_desc.partition = princeGPU.assign_partitions()
 end
-
 
 local function assign_qos()
    local netid = princeUsers.nyu_netid()
