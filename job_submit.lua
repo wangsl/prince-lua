@@ -54,7 +54,7 @@ local prince_pkgs_last_modification_time = {}
 local function unload_new_updated_packages()
    local prefix = "/share/apps/admins/slurm-lua/"
    local pkgs = { "princeUtils", "princeUsers", "princeCPU", "princeGPU",
-		  "princeQoS", "princeJob", "prince" }
+		  "princeQoS", "princeJob", "prince", "job_submit" }
 
    local has_new_updated = false
    
@@ -142,17 +142,10 @@ end
 
 function slurm_job_submit(job_desc, part_list, submit_uid)
 
-   if submit_uid == 1015 then --or submit_uid == 1296493 then
-      --package.path = ';/opt/slurm/etc/?.lua;' .. package.path
-
+   if submit_uid == 1015 or submit_uid == 1296493 then
       unload_new_updated_packages()
-
       package.path = ';/share/apps/admins/slurm-lua/?.lua;' .. package.path
-      
-      --if package.loaded.prince ~= nil and prince.whether_to_reload_prince_lua() then
-      -- package.loaded.prince = nil
-      --end
-      prince = require "prince"
+      local prince = require "prince"
       return prince.job_submission(job_desc, part_list, submit_uid)
    end
    
@@ -381,33 +374,16 @@ function slurm_job_submit(job_desc, part_list, submit_uid)
 end
 
 function slurm_job_modify(job_desc, job_rec, part_list, modify_uid)
-
-   if modify_uid == 1015 or modify_uid == 1296493 then
-      package.path = ';/opt/slurm/etc/?.lua;' .. package.path
-      if package.loaded.prince ~= nil and prince.whether_to_reload_prince_lua() then
-	 package.loaded.prince = nil
-      end
-
-      prince = require "prince"
-
-      prince.job_modification_test(job_desc, job_rec, part_list, modify_uid)
+   if modify_uid == 0 then
+      return slurm.SUCCESS
+   elseif modify_uid == 1015 then
+      package.path = ';/share/apps/admins/slurm-lua/?.lua;' .. package.path
+      unload_new_updated_packages()
+      local prince = require "prince"
+      return prince.job_modification(job_desc, job_rec, part_list, modify_uid)
+   else
+      return slurm.ERROR
    end
-      
-
-   if true then return slurm.SUCCESS end
-   
-   slurm.log_info("*** test by Shenglong for slurm_job_modify ***")
-   
-   slurm.log_info("slurm_job_modify: for job %u from uid %u", job_rec.job_id, modify_uid)
-   
-   if job_desc.comment == nil then
-      local comment = "*** TEST_COMMENT ***"
-      slurm.log_info("slurm_job_modify: for job %u from uid %u, setting default comment value: %s",
-		     job_rec.job_id, modify_uid, comment)
-      job_desc.comment = comment
-   end
-   
-   return slurm.SUCCESS
 end
 
 slurm.log_info("**** SLURM Lua plugin initialized with Lua version %s ****", _VERSION)
@@ -415,3 +391,4 @@ slurm.log_info("**** SLURM Lua plugin initialized with Lua version %s ****", _VE
 create_USERS_from_etc_passwd()
 
 return slurm.SUCCESS
+

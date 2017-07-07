@@ -46,16 +46,7 @@ local partition_groups = {
 		users = { }
    },
 
-   --[[
    group_bigmem = { partitions = "bigmem",
-		    min_cpus = 1, max_cpus = 48, max_nodes = 1,
-		    min_memory = 250, max_memory = 1500,
-		    min_ave_memory = 0, max_ave_memory = 1500,
-		    users = { "RES", "wang" }
-   },
-   --]]
-   
-   group_bigmem_2 = { partitions = "bigmem",
 		    min_cpus = 1, max_cpus = 48, max_nodes = 1,
 		    min_memory = 50, max_memory = 1500,
 		    min_ave_memory = 50, max_ave_memory = 1500,
@@ -63,11 +54,13 @@ local partition_groups = {
    }
 }
 
-local partition_group_names = { "group_20_62_16", "group_28_125", "group_28", "group_28_250",
-				"group_bigmem_2"  }
+local partition_group_names = { "group_20_62_16",
+				"group_28_125", "group_28", "group_28_250", 
+				"group_bigmem" }
 
 local function setup_partition_to_partition_group()
    if not princeUtils.is_empty(partition_to_partition_group) then return end
+   slurm_log("Setup partition to partition group")
    for key, val in pairs(partition_groups) do
       local tmp = princeUtils.split(val.partitions, ",")
       for i = 1, #tmp do
@@ -78,9 +71,10 @@ end
 
 local function fit_into_partition_group(group_name)
    local group = partition_groups[group_name]
-
    if group ~= nil then
-      if #group.users > 0 and not princeUtils.in_table(group.users, princeUsers.nyu_netid()) then return false end
+      if #group.users > 0 and not princeUtils.in_table(group.users, princeUsers.nyu_netid()) then
+	 return false
+      end
       if nodes <= group.max_nodes and cpus <= group.max_cpus and
 	 group.min_memory <= memory and memory <= group.max_memory and
          group.min_ave_memory <= ave_memory and ave_memory <= group.max_ave_memory then
@@ -115,7 +109,7 @@ end
 
 local function partitions_are_valid(partitions)
    if partitions == nil then
-      user_log("No partitions set")
+      user_log("No CPU partitions set")
       return false
    else
       for _, part_name in pairs(princeUtils.split(partitions, ",")) do
@@ -128,16 +122,12 @@ local function partitions_are_valid(partitions)
    return true
 end
 
-local function setup_compute_resources(args)
+local function setup_parameters(args)
    cpus = args.cpus or 1
    memory = args.memory/1024 or 2 -- in GB only
    nodes = args.nodes or 1
    
    ave_memory = memory/cpus
-end
-
-local function setup_parameters(args)
-   setup_compute_resources(args)
 end
 
 -- functions

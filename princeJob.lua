@@ -38,9 +38,11 @@ local function input_compute_resources_are_valid()
       return false
    end
 
-   if job_desc.num_tasks ~= uint32_NO_VAL and
-      job_desc.min_nodes == 1 and job_desc.max_nodes == uint32_NO_VAL and
-      job_desc.ntasks_per_node == uint16_NO_VAL then
+   if job_desc.gres ~= nil then
+      if not princeGPU.gpu_type_from_gres_is_valid(job_desc.gres) then return false end
+   end
+
+   if job_desc.num_tasks ~= uint32_NO_VAL then
       user_log("Plase do not specify --ntasks on prince cluster, try to use --nodes and --tasks-per-node together")
       return false
    end
@@ -50,6 +52,7 @@ end
 
 local function print_job_desc()
    slurm_log("")
+   
    slurm_log("time_limit = %d", job_desc.time_limit)
    slurm_log("ntasks_per_node: %d", job_desc.ntasks_per_node)
    slurm_log("num_tasks = %d", job_desc.num_tasks)
@@ -79,7 +82,7 @@ local function setup_gpu_job()
    if job_desc.gres ~= nil then
       gpu_type, gpus = princeGPU.gres_for_gpu(job_desc.gres)
    end
-   
+
    if gpus > 0 then
       gpu_job = true
       princeGPU.setup_parameters{ gpus = gpus, cpus = n_cpus_per_node,
@@ -91,11 +94,24 @@ local function setup_gpu_job()
 end
 
 local function set_default_compute_resources()
-   if job_desc.time_limit == uint32_NO_VAL then job_desc.time_limit = 60 end
-   if job_desc.pn_min_cpus == uint16_NO_VAL then job_desc.pn_min_cpus = 1 end
-   if job_desc.cpus_per_task == uint16_NO_VAL then job_desc.cpus_per_task = 1 end
 
+   if job_desc.mail_type ~= 0 and job_desc.mail_user == nil then
+      local netid = princeUsers.nyu_netid()
+      if string.find(netid, "^%a+%d+$") then
+	 job_desc.mail_user = netid .. "@nyu.edu"
+      end
+   end
+
+   if job_desc.time_limit == uint32_NO_VAL then job_desc.time_limit = 60 end
+
+   if job_desc.cpus_per_task == uint16_NO_VAL then job_desc.cpus_per_task = 1 end
+   
+   if job_desc.pn_min_cpus == uint16_NO_VAL then job_desc.pn_min_cpus = 1 end
    if job_desc.ntasks_per_node == uint16_NO_VAL then job_desc.ntasks_per_node = 1 end
+   
+   n_cpus_per_node = job_desc.ntasks_per_node * job_desc.cpus_per_task
+   
+   if job_desc.min_nodes == uint32_NO_VAL then job_desc.min_nodes = 1 end
 
    if not memory_is_specified(job_desc.pn_min_memory) then
       if memory_is_specified(job_desc.min_mem_per_cpu) then
@@ -104,15 +120,6 @@ local function set_default_compute_resources()
 	 job_desc.pn_min_memory = 2048
       end
    end
-
-   if job_desc.mail_type ~= 0 and job_desc.mail_user == nil then
-      local netid = princeUsers.nyu_netid()
-      if string.find(netid, "^%a+%d+$") then
-	 job_desc.mail_user = netid .. "@nyu.edu"
-      end
-   end
-   
-   n_cpus_per_node = job_desc.ntasks_per_node * job_desc.cpus_per_task
 end
 
 local function assign_cpu_partitions()
@@ -164,9 +171,7 @@ end
 local function assign_qos()
    local netid = princeUsers.nyu_netid()
    princeQoS.setup_parameters{time_limit = job_desc.time_limit, user_netid = netid}
-   if job_desc.qos == nil then
-      job_desc.qos = princeQoS.assign_qos()
-   end
+   if job_desc.qos == nil then job_desc.qos = princeQoS.assign_qos() end
 end
 
 local function compute_resources_are_valid()
@@ -183,16 +188,15 @@ local function compute_resources_are_valid()
    return true
 end
 				   
-local function setup_routings()
-   print_job_desc()
+local function setup_routings()     
+   --print_job_desc()
    
    set_default_compute_resources()
-
+   
    setup_gpu_job()
 
    if not gpu_job then
-      princeCPU.setup_parameters{cpus = n_cpus_per_node,
-				 memory = job_desc.pn_min_memory,
+      princeCPU.setup_parameters{cpus = n_cpus_per_node, memory = job_desc.pn_min_memory,
 				 nodes = job_desc.min_nodes }
    end
 
@@ -200,7 +204,7 @@ local function setup_routings()
 
    assign_qos()
 
-   print_job_desc()
+   --print_job_desc()
 end
 
 local function setup_parameters(args)
@@ -216,3 +220,4 @@ princeJob.compute_resources_are_valid = compute_resources_are_valid
 princeJob.setup_routings = setup_routings
 
 return princeJob
+

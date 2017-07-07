@@ -15,7 +15,7 @@ users["1042"] = "peskin"
 users["1044"] = "teague"
 users["1045"] = "polunina"
 
-local my_blocked_netids = { }
+local blocked_netids = { }
 
 local netid = nil
 
@@ -59,7 +59,7 @@ end
 
 local function netid_is_blocked(uid)
    if not uid_is_valid(uid) then return true end
-   if #my_blocked_netids > 0 and princeUtils.in_table(my_blocked_netids, netid) then
+   if #blocked_netids > 0 and princeUtils.in_table(blocked_netids, netid) then
       slurm_log("user %s is blocked to submit jobs", netid)
       user_log("Sorry, you are not allowed to submit jobs now, please contact hpc@nyu.edu for help")
       return true
