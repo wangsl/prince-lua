@@ -5,11 +5,14 @@ local prince = { }
 local princeUtils = require "princeUtils"
 local princeUsers = require "princeUsers"
 local princeJob = require "princeJob"
+local time = require 'time'
 
 local slurm_log = princeUtils.slurm_log
 local user_log = princeUtils.user_log
 
 local function job_submission(job_desc, part_list, submit_uid)
+
+   local time_start = time.getMicroseconds()
    
    if princeUsers.netid_is_blocked(submit_uid) then return slurm.ERROR end
    
@@ -20,6 +23,10 @@ local function job_submission(job_desc, part_list, submit_uid)
    princeJob.setup_routings()
 
    if not princeJob.compute_resources_are_valid() then return slurm.ERROR end
+
+   local time_end = time.getMicroseconds()
+
+   slurm_log("Lua job submission plugin time %d usec", (time_end - time_start)*10^6)
 
    return slurm.SUCCESS
 end

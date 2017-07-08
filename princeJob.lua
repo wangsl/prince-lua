@@ -28,8 +28,9 @@ local gpu_job = false
 local function memory_is_specified(mem)
    if mem == nil or mem > bigIntNumber then
       return false
+   else
+      return true
    end
-   return true
 end
 
 local function input_compute_resources_are_valid()
@@ -77,19 +78,21 @@ local function print_job_desc()
 end
 
 local function setup_gpu_job()
+   gpu_job = false
+   
    local gpu_type = nil
    local gpus = 0
    if job_desc.gres ~= nil then
       gpu_type, gpus = princeGPU.gres_for_gpu(job_desc.gres)
    end
-
+   
    if gpus > 0 then
       gpu_job = true
       princeGPU.setup_parameters{ gpus = gpus, cpus = n_cpus_per_node,
 				  memory = job_desc.pn_min_memory,
 				  gpu_type = gpu_type }
-   else
-      gpu_job = false
+      
+      if job_desc.bitflags == 0 then job_desc.bitflags = slurm.GRES_ENFORCE_BIND end
    end
 end
 
@@ -196,7 +199,8 @@ local function setup_routings()
    setup_gpu_job()
 
    if not gpu_job then
-      princeCPU.setup_parameters{cpus = n_cpus_per_node, memory = job_desc.pn_min_memory,
+      princeCPU.setup_parameters{cpus = n_cpus_per_node,
+				 memory = job_desc.pn_min_memory,
 				 nodes = job_desc.min_nodes }
    end
 

@@ -142,9 +142,10 @@ end
 
 function slurm_job_submit(job_desc, part_list, submit_uid)
 
-   if submit_uid == 1015 or submit_uid == 1296493 then
+   if submit_uid == 1015 or submit_uid == 2761180 then
       unload_new_updated_packages()
       package.path = ';/share/apps/admins/slurm-lua/?.lua;' .. package.path
+      package.cpath = ';/share/apps/admins/slurm-lua/?.so;' .. package.cpath 
       local prince = require "prince"
       return prince.job_submission(job_desc, part_list, submit_uid)
    end
