@@ -43,11 +43,11 @@ local function input_compute_resources_are_valid()
       if not princeGPU.gpu_type_from_gres_is_valid(job_desc.gres) then return false end
    end
 
-   if job_desc.num_tasks ~= uint32_NO_VAL then
+   if job_desc.num_tasks ~= uint32_NO_VAL and job_desc.ntasks_per_node == uint16_NO_VAL then 
       user_log("Plase do not specify --ntasks on prince cluster, try to use --nodes and --tasks-per-node together")
       return false
    end
-      
+   
    return true
 end
 
@@ -110,6 +110,7 @@ local function set_default_compute_resources()
    if job_desc.cpus_per_task == uint16_NO_VAL then job_desc.cpus_per_task = 1 end
    
    if job_desc.pn_min_cpus == uint16_NO_VAL then job_desc.pn_min_cpus = 1 end
+   
    if job_desc.ntasks_per_node == uint16_NO_VAL then job_desc.ntasks_per_node = 1 end
    
    n_cpus_per_node = job_desc.ntasks_per_node * job_desc.cpus_per_task
@@ -222,6 +223,8 @@ princeJob.input_compute_resources_are_valid = input_compute_resources_are_valid
 princeJob.compute_resources_are_valid = compute_resources_are_valid
 
 princeJob.setup_routings = setup_routings
+
+slurm_log("To load princeJob.lua")
 
 return princeJob
 

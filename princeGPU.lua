@@ -179,5 +179,7 @@ princeGPU.setup_parameters = setup_parameters
 princeGPU.assign_partitions = assign_partitions
 princeGPU.partitions_are_valid = partitions_are_valid
 
+slurm_log("To load princeGPU.lua")
+
 return princeGPU
 

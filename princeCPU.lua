@@ -136,6 +136,8 @@ princeCPU.setup_parameters = setup_parameters
 princeCPU.assign_partitions = assign_partitions
 princeCPU.partitions_are_valid = partitions_are_valid
 
+slurm_log("To load princeCPU.lua")
+
 return princeCPU
 
 

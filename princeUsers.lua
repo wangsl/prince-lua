@@ -75,5 +75,7 @@ end
 princeUsers.nyu_netid = nyu_netid
 princeUsers.netid_is_blocked = netid_is_blocked
 
+slurm_log("To load princeUsers.lua")
+
 return princeUsers
 

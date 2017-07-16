@@ -21,9 +21,7 @@ local function in_table(tbl, item)
 end
 
 local function is_empty(t)
-   for _, _ in pairs(t) do
-      return false
-   end
+   for _, _ in pairs(t) do return false end
    return true
 end
 
@@ -48,4 +46,7 @@ princeUtils.seven_days = seven_days
 princeUtils.slurm_log = slurm.log_info
 princeUtils.user_log = slurm.log_user
 
+princeUtils.slurm_log("To load princeUtils.lua")
+
 return princeUtils
+

@@ -101,4 +101,6 @@ princeQoS.setup_parameters = setup_parameters
 princeQoS.assign_qos = assign_qos
 princeQoS.qos_is_valid = qos_is_valid
 
+slurm_log("To load princeQoS.lua")
+
 return princeQoS

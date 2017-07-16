@@ -43,4 +43,6 @@ end
 prince.job_submission = job_submission
 prince.job_modification = job_modification
 
+slurm_log("To load prince.lua")
+
 return prince
