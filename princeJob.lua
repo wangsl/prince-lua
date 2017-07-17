@@ -210,6 +210,7 @@ local function setup_routings()
    assign_qos()
 
    -- print_job_desc()
+   if job_desc.partition ~= nil then slurm_log("partitions: %s", job_desc.partition) end
 end
 
 local function setup_parameters(args)

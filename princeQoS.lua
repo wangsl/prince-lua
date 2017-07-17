@@ -38,12 +38,14 @@ local qos_all = {
       time_max = seven_days,
       users = { "RES", "wang" }
    },
+   --[[
    mhealth = {
       time_min = 0,
       time_max = two_days,
       users = { "RES", "ak6179", "apd283", "kz918", "nn1119", "sb6065",
                 "wc1144", "xz1364", "yg1053", "yj426" }
    }
+   --]]
 }
 
 local time_limit = 0

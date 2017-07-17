@@ -1,0 +1,72 @@
+#!/bin/env lua
+
+--[[
+   
+   Example lua script demonstrating the SLURM job_submit/lua interface.
+   This is only an example, not meant for use in its current form.
+   
+   Leave the function names, arguments, local variables and setmetatable
+   set up logic in each function unchanged. Change only the logic after
+   the line containing "*** YOUR LOGIC GOES BELOW ***".
+   
+   For use, this script should be copied into a file name "job_submit.lua"
+   in the same directory as the SLURM configuration file, slurm.conf.
+   
+--]]
+
+local prince_pkgs_last_modification_time = {}
+
+local function unload_new_updated_packages()
+   local prefix = "/share/apps/admins/slurm-lua/"
+   local pkgs = { "princeUtils.lua", "princeUsers.lua", "princeCPU.lua",
+		  "princeGPU.lua", "princeQoS.lua", "princeJob.lua",
+		  "prince.lua", "job_submit.lua"
+   }
+   
+   local has_new_updated = false
+   
+   for _, pkg in pairs(pkgs) do
+      local lua_file = prefix .. pkg -- .. ".lua"
+      local f = io.popen("stat -c %Y " .. lua_file)
+      local last_modified = f:read()
+      f:close()
+      
+      if prince_pkgs_last_modification_time[pkg] == nil then
+	 prince_pkgs_last_modification_time[pkg] = last_modified
+      else
+	 if prince_pkgs_last_modification_time[pkg] < last_modified then
+	    has_new_updated = true
+	    prince_pkgs_last_modification_time[pkg] = last_modified
+	    slurm.log_info("%s has new update", lua_file)
+	 end
+      end
+   end
+
+   -- to reload all the LUA packages, dependency issue
+   if has_new_updated then
+      for _, pkg in pairs(pkgs) do
+	 local pkg_ = string.gsub(pkg, ".lua$", "")
+	 package.loaded[pkg_] = nil
+      end
+   end
+end
+
+function slurm_job_submit(job_desc, part_list, submit_uid)
+   unload_new_updated_packages()
+   package.path = ';/share/apps/admins/slurm-lua/?.lua;' .. package.path
+   package.cpath = ';/share/apps/admins/slurm-lua/?.so;' .. package.cpath 
+   local prince = require "prince"
+   return prince.job_submission(job_desc, part_list, submit_uid)
+end
+
+function slurm_job_modify(job_desc, job_rec, part_list, modify_uid)
+   if modify_uid == 0 then
+      return slurm.SUCCESS
+   else
+      return slurm.ERROR
+   end
+end
+
+slurm.log_info("**** SLURM Lua plugin initialized with Lua version %s ****", _VERSION)
+
+return slurm.SUCCESS

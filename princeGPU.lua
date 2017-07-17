@@ -53,7 +53,7 @@ local partition_configures = {
 	       { gpus = 3, max_cpus = 21, max_memory = 100 },
 	       { gpus = 4, max_cpus = 28, max_memory = 125 },
 	       users = { "ak6179", "apd283", "kz918", "nn1119", "sb6065",
-			 "wc1144", "xz1364", "yg1053", "yj426" }
+			 "wc1144", "xz1364", "yg1053", "yj426", "sw77" }
    }
 }
 
