@@ -1,6 +1,6 @@
 #!/bin/env lua
 
-local princeUtils = {}
+local princeUtils = { }
 
 local two_days = 2880 -- in mins
 local seven_days = 10080 -- in mins

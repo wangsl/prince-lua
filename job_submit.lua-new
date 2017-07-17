@@ -14,7 +14,7 @@
    
 --]]
 
-local prince_pkgs_last_modification_time = {}
+local prince_pkgs_last_modification_time = { }
 
 local function unload_new_updated_packages()
    local prefix = "/share/apps/admins/slurm-lua/"
@@ -26,7 +26,7 @@ local function unload_new_updated_packages()
    local has_new_updated = false
    
    for _, pkg in pairs(pkgs) do
-      local lua_file = prefix .. pkg -- .. ".lua"
+      local lua_file = prefix .. pkg
       local f = io.popen("stat -c %Y " .. lua_file)
       local last_modified = f:read()
       f:close()
@@ -52,9 +52,9 @@ local function unload_new_updated_packages()
 end
 
 function slurm_job_submit(job_desc, part_list, submit_uid)
-   unload_new_updated_packages()
    package.path = ';/share/apps/admins/slurm-lua/?.lua;' .. package.path
-   package.cpath = ';/share/apps/admins/slurm-lua/?.so;' .. package.cpath 
+   package.cpath = ';/share/apps/admins/slurm-lua/?.so;' .. package.cpath
+   -- unload_new_updated_packages()
    local prince = require "prince"
    return prince.job_submission(job_desc, part_list, submit_uid)
 end
