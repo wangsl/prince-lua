@@ -5,7 +5,7 @@ local prince = { }
 local princeUtils = require "princeUtils"
 local princeUsers = require "princeUsers"
 local princeJob = require "princeJob"
-local time = require 'time'
+local time = require "time"
 
 local slurm_log = princeUtils.slurm_log
 local user_log = princeUtils.user_log
@@ -46,3 +46,4 @@ prince.job_modification = job_modification
 slurm_log("To load prince.lua")
 
 return prince
+

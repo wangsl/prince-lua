@@ -31,12 +31,14 @@
 #define UINT unsigned int
 #endif
 
-const UINT SEC  = 	2;
-const UINT MSEC = 	4;
-const UINT USEC = 	8;
+static const UINT SEC  = 	2;
+static const UINT MSEC = 	4;
+static const UINT USEC = 	8;
+
+static int loaded_times = 0;
 
 /* time helper function */
-double get_time(UINT k){
+static double get_time(UINT k){
   struct timeval tv;
   gettimeofday(&tv, NULL);
   if(k == SEC) return tv.tv_sec;
@@ -46,28 +48,28 @@ double get_time(UINT k){
 }
 
 /* get miliseconds relative to seconds since EPOCH */
-int t_mili(lua_State *L)
+static int t_mili(lua_State *L)
 {
   lua_pushnumber(L, get_time(MSEC));
   return 1;
 }
 
 /* get seconds since EPOCH */
-int t_seconds(lua_State *L)
+static int t_seconds(lua_State *L)
 {
   lua_pushnumber(L, get_time(SEC));
   return 1;
 }
 
 /* get microseconds relative to seconds since EPOCH */
-int t_micro(lua_State *L)
+static int t_micro(lua_State *L)
 {
   lua_pushnumber(L, get_time(USEC));
   return 1;
 }
 
 /* register functions */
-const struct luaL_reg time_lib [] = {
+static const struct luaL_reg time_lib [] = {
   {"getMiliseconds", t_mili},
   {"getSeconds", t_seconds},
   {"getMicroseconds", t_micro},
@@ -78,6 +80,6 @@ const struct luaL_reg time_lib [] = {
 LUALIB_API int luaopen_time(lua_State *L)
 {
   luaL_register(L, "time", time_lib);
+  info("              : To load time.so, loaded %d times", ++loaded_times);
   return 1;
 }
-

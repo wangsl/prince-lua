@@ -209,7 +209,7 @@ local function setup_routings()
 
    assign_qos()
 
-   --print_job_desc()
+   -- print_job_desc()
 end
 
 local function setup_parameters(args)
