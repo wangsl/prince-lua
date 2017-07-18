@@ -21,21 +21,21 @@ local partition_groups = {
    group_20_62_16 = { partitions = "c26,c27,c28,c29,c30,c31",
 		      min_cpus = 1, max_cpus = 20, max_nodes = 16,
 		      min_memory = 0, max_memory = 62,
-		      min_ave_memory = 0, max_ave_memory = 15,
+		      min_ave_memory = 0, max_ave_memory = 10,
 		      users = { }
    },
    
    group_28_125 = { partitions = "c01_17",
 		    min_cpus = 1, max_cpus = 28, max_nodes = 68,
 		    min_memory = 0, max_memory = 125,
-		    min_ave_memory = 0, max_ave_memory = 30,
+		    min_ave_memory = 0, max_ave_memory = 20,
 		    users = { }
    },
    
    group_28_250 = { partitions = "c18_25",
 		    min_cpus = 1, max_cpus = 28, max_nodes = 32,
 		    min_memory = 0, max_memory = 250,
-		    min_ave_memory = 0, max_ave_memory = 125,
+		    min_ave_memory = 0, max_ave_memory = 100,
 		    users = { }
    },	       
    
@@ -49,7 +49,7 @@ local partition_groups = {
    group_bigmem = { partitions = "bigmem",
 		    min_cpus = 1, max_cpus = 48, max_nodes = 1,
 		    min_memory = 50, max_memory = 1500,
-		    min_ave_memory = 50, max_ave_memory = 1500,
+		    min_ave_memory = 10, max_ave_memory = 1500,
 		    users = { }
    }
 }
