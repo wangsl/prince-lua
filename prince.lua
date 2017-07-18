@@ -26,7 +26,8 @@ local function job_submission(job_desc, part_list, submit_uid)
 
    local time_end = time.getMicroseconds()
 
-   slurm_log("Lua job submission plugin time %d usec", (time_end - time_start)*10^6)
+   slurm_log("Lua job submission plugin time %d usec for %s",
+	     (time_end - time_start)*10^6, princeUsers.nyu_netid())
 
    return slurm.SUCCESS
 end
