@@ -21,7 +21,7 @@ local partition_groups = {
    group_20_62_16 = { partitions = "c26,c27,c28,c29,c30,c31",
 		      min_cpus = 1, max_cpus = 20, max_nodes = 16,
 		      min_memory = 0, max_memory = 62,
-		      min_ave_memory = 0, max_ave_memory = 10,
+		      min_ave_memory = 0, max_ave_memory = 6,
 		      users = { }
    },
    
@@ -42,7 +42,7 @@ local partition_groups = {
    group_28 = { partitions = "c01_25",
 		min_cpus = 1, max_cpus = 28, max_nodes = 100,
 		min_memory = 0, max_memory = 125,
-		min_ave_memory = 0, max_ave_memory = 30,
+		min_ave_memory = 0, max_ave_memory = 20,
 		users = { }
    },
 
