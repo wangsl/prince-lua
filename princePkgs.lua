@@ -13,7 +13,7 @@ local function unload_new_updated_packages()
    local prefix = "/share/apps/admins/slurm-lua/"
    local pkgs = { "princeUtils.lua", "princeUsers.lua", "princeCPU.lua",
 		  "princeGPU.lua", "princeQoS.lua", "princeJob.lua",
-		  "princePkgs.lua",
+		  "princePkgs.lua", "princeQoSNew.lua",
 		  "prince.lua", "job_submit.lua"
    }
    
@@ -50,3 +50,4 @@ princePkgs.unload_new_updated_packages = unload_new_updated_packages
 slurm_log("To load princePkgs.lua")
 
 return princePkgs
+

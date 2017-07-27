@@ -11,6 +11,44 @@ local slurm_log = princeUtils.slurm_log
 local user_log = princeUtils.user_log
 
 local qos_all = {
+
+   cpu48 = {
+      time_min = 0,
+      time_max = two_days,
+      users = { }
+   },
+   
+   cpu168 = {
+      time_min = 0,
+      time_max = seven_days,
+      users = { }
+   },
+   
+   cpuplus = {
+      time_min = 0,
+      time_max = seven_days,
+      users = { "RES" }
+   },
+   
+   gpu48 = {
+      time_min = 0,
+      time_max = two_days,
+      users = { }
+   },
+   
+   gpu168 = {
+      time_min = 0,
+      time_max = seven_days,
+      users = { }
+   },
+   
+   gpuplus = {
+      time_min = 0,
+      time_max = seven_days,
+      users = { "RES" }
+   },
+
+   --[[
    qos48 = {
       time_min = 0,
       time_max = two_days,
@@ -21,13 +59,11 @@ local qos_all = {
       time_max = seven_days,
       users = { }
    },
-   --[[
    qos48plus = {
       time_min = 0,
       time_max = two_days,
       users = { "RES", "sw77", "wang" }
    },
-   --]]
    qos168plus = {
       time_min = two_days,
       time_max = seven_days,
@@ -38,7 +74,6 @@ local qos_all = {
       time_max = seven_days,
       users = { "RES", "wang" }
    },
-   --[[
    mhealth = {
       time_min = 0,
       time_max = two_days,
@@ -50,13 +85,14 @@ local qos_all = {
 
 local time_limit = 0
 local user_netid = nil
+local gpu_job = false
 
 local function assign_qos()
    local qos = nil
    if time_limit <= princeUtils.two_days then
-      qos = "qos48"
+      if gpu_job then qos = "gpu48" else qos = "cpu48" end
    elseif time_limit <= princeUtils.seven_days then
-      qos = "qos168"
+      if gpu_job then qos = "gpu168" else qos = "cpu168" end
    end
    return qos
 end
@@ -82,6 +118,18 @@ local function qos_is_valid(qos_name)
 	 user_log("No authorized QoS '%s'", qos_name)
 	 return false
       end
+      
+      if gpu_job then
+	 if string.sub(qos_name, 1, 3) ~= "gpu" then
+	    user_log("Invalid QoS '%s' for GPU jobs", qos_name)
+	    return false
+	 end
+      else
+	 if string.sub(qos_name, 1, 3) ~= "cpu" then
+	    user_log("Invalid QoS '%s' for CPU jobs", qos_name)
+	    return false
+	 end
+      end
 
       if time_limit <= qos.time_min or time_limit > qos.time_max then
 	 user_log("Job time limit does not match QoS '%s', it should between %d and %d mins, job wall time is %d mins",
@@ -96,6 +144,7 @@ end
 local function setup_parameters(args)
    time_limit = args.time_limit or 1
    user_netid = args.user_netid or nil
+   gpu_job = args.gpu_job or false
 end
 
 -- functions 
@@ -106,3 +155,4 @@ princeQoS.qos_is_valid = qos_is_valid
 slurm_log("To load princeQoS.lua")
 
 return princeQoS
+
