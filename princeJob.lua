@@ -6,9 +6,7 @@ local princeUtils = require "princeUtils"
 local princeUsers = require "princeUsers"
 local princeCPU = require "princeCPU"
 local princeGPU = require "princeGPU"
-
 local princeQoS = require "princeQoS"
---local princeQoSNew = require "princeQoSNew"
 
 local slurm_log = princeUtils.slurm_log
 local user_log = princeUtils.user_log
@@ -175,9 +173,11 @@ local function assign_partitions()
 end
 
 local function assign_qos()
-   local netid = princeUsers.nyu_netid()
-   princeQoS.setup_parameters{time_limit = job_desc.time_limit, user_netid = netid, gpu_job = gpu_job}
-   if job_desc.qos == nil then job_desc.qos = princeQoS.assign_qos() end
+   if job_desc.qos == nil then
+      local netid = princeUsers.nyu_netid()
+      princeQoS.setup_parameters{time_limit = job_desc.time_limit, user_netid = netid, gpu_job = gpu_job}
+      job_desc.qos = princeQoS.assign_qos()
+   end
 end
 
 local function compute_resources_are_valid()
@@ -195,8 +195,6 @@ local function compute_resources_are_valid()
 end
 				   
 local function setup_routings()     
-   --print_job_desc()
-   
    set_default_compute_resources()
    
    setup_gpu_job()
@@ -206,14 +204,13 @@ local function setup_routings()
 				 memory = job_desc.pn_min_memory,
 				 nodes = job_desc.min_nodes }
    end
-
+   
    assign_partitions()
 
    assign_qos()
-
-   -- print_job_desc()
+   
    if job_desc.partition ~= nil then slurm_log("partitions: %s", job_desc.partition) end
-   slurm_log("QoS: %s", job_desc.qos)
+   if job_desc.qos ~= nil then slurm_log("QoS: %s", job_desc.qos) end
 end
 
 local function setup_parameters(args)
