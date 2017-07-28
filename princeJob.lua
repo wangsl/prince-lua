@@ -173,11 +173,9 @@ local function assign_partitions()
 end
 
 local function assign_qos()
-   if job_desc.qos == nil then
-      local netid = princeUsers.nyu_netid()
-      princeQoS.setup_parameters{time_limit = job_desc.time_limit, user_netid = netid, gpu_job = gpu_job}
-      job_desc.qos = princeQoS.assign_qos()
-   end
+   local netid = princeUsers.nyu_netid()
+   princeQoS.setup_parameters{time_limit = job_desc.time_limit, user_netid = netid, gpu_job = gpu_job}
+   if job_desc.qos == nil then job_desc.qos = princeQoS.assign_qos() end
 end
 
 local function compute_resources_are_valid()
@@ -208,6 +206,8 @@ local function setup_routings()
    assign_partitions()
 
    assign_qos()
+
+   -- print_job_desc()
    
    if job_desc.partition ~= nil then slurm_log("partitions: %s", job_desc.partition) end
    if job_desc.qos ~= nil then slurm_log("QoS: %s", job_desc.qos) end
@@ -228,5 +228,4 @@ princeJob.setup_routings = setup_routings
 slurm_log("To load princeJob.lua")
 
 return princeJob
-
 

@@ -19,7 +19,7 @@ local qos_all = {
    },
    
    cpu168 = {
-      time_min = 0,
+      time_min = two_days,
       time_max = seven_days,
       users = { }
    },
@@ -37,7 +37,7 @@ local qos_all = {
    },
    
    gpu168 = {
-      time_min = 0,
+      time_min = two_days,
       time_max = seven_days,
       users = { }
    },
