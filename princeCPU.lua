@@ -55,7 +55,9 @@ local partition_groups = {
 }
 
 local partition_group_names = { "group_20_62_16",
-				"group_28_125", "group_28", "group_28_250", 
+				"group_28_250",
+				"group_28_125",
+				"group_28",
 				"group_bigmem" }
 
 local function setup_partition_to_partition_group()
@@ -107,6 +109,14 @@ local function assign_partitions()
    return partitions
 end
 
+local function extra_checks_are_valid()
+   if 250 < memory and memory <= 500 and cpus > 20 then
+      user_log("For job with memory between 250GB and 500GB per node, please declare no more than 20 CPU cores per node")
+      return false
+   end
+   return true
+end
+
 local function partitions_are_valid(partitions)
    if partitions == nil then
       user_log("No CPU partitions set")
@@ -119,6 +129,7 @@ local function partitions_are_valid(partitions)
 	 end
       end
    end
+   if not extra_checks_are_valid() then return false end
    return true
 end
 
