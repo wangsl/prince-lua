@@ -48,6 +48,12 @@ local qos_all = {
       users = { "RES" }
    },
 
+   sysadm = {
+      time_min = 0,
+      time_max = seven_days,
+      users = { "RES", "wang" }
+   }
+
    --[[
    qos48 = {
       time_min = 0,
@@ -118,6 +124,8 @@ local function qos_is_valid(qos_name)
 	 user_log("No authorized QoS '%s'", qos_name)
 	 return false
       end
+
+      if qos_name == "sysadm" then return true end
       
       if gpu_job then
 	 if string.sub(qos_name, 1, 3) ~= "gpu" then
