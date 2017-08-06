@@ -21,36 +21,31 @@ local partition_groups = {
    group_20_62_16 = { partitions = "c26,c27,c28,c29,c30,c31",
 		      min_cpus = 1, max_cpus = 20, max_nodes = 16,
 		      min_memory = 0, max_memory = 62,
-		      min_ave_memory = 0, max_ave_memory = 6,
-		      users = { }
+		      min_ave_memory = 0, max_ave_memory = 6
    },
    
    group_28_125 = { partitions = "c01_17",
 		    min_cpus = 1, max_cpus = 28, max_nodes = 68,
 		    min_memory = 0, max_memory = 125,
-		    min_ave_memory = 0, max_ave_memory = 20,
-		    users = { }
+		    min_ave_memory = 0, max_ave_memory = 20
    },
    
    group_28_250 = { partitions = "c18_25",
 		    min_cpus = 1, max_cpus = 28, max_nodes = 32,
 		    min_memory = 0, max_memory = 250,
-		    min_ave_memory = 0, max_ave_memory = 100,
-		    users = { }
+		    min_ave_memory = 0, max_ave_memory = 100
    },	       
    
    group_28 = { partitions = "c01_25",
 		min_cpus = 1, max_cpus = 28, max_nodes = 100,
 		min_memory = 0, max_memory = 125,
-		min_ave_memory = 0, max_ave_memory = 20,
-		users = { }
+		min_ave_memory = 0, max_ave_memory = 20
    },
 
    group_bigmem = { partitions = "bigmem",
 		    min_cpus = 1, max_cpus = 48, max_nodes = 1,
 		    min_memory = 50, max_memory = 1500,
-		    min_ave_memory = 10, max_ave_memory = 1500,
-		    users = { }
+		    min_ave_memory = 10, max_ave_memory = 1500
    }
 }
 
@@ -74,7 +69,7 @@ end
 local function fit_into_partition_group(group_name)
    local group = partition_groups[group_name]
    if group ~= nil then
-      if #group.users > 0 and not princeUtils.in_table(group.users, princeUsers.nyu_netid()) then
+      if group.users ~= nil and not princeUtils.in_table(group.users, princeUsers.nyu_netid()) then
 	 return false
       end
       if nodes <= group.max_nodes and cpus <= group.max_cpus and

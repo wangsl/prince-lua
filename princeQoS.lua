@@ -14,79 +14,48 @@ local qos_all = {
 
    cpu48 = {
       time_min = 0,
-      time_max = two_days,
-      users = { }
+      time_max = two_days
    },
    
    cpu168 = {
       time_min = two_days,
-      time_max = seven_days,
-      users = { }
-   },
-   
-   cpuplus = {
-      time_min = 0,
-      time_max = seven_days,
-      users = { "RES",  "tmc8" }
+      time_max = seven_days
    },
    
    gpu48 = {
       time_min = 0,
-      time_max = two_days,
-      users = { }
+      time_max = two_days
    },
    
    gpu168 = {
       time_min = two_days,
+      time_max = seven_days
+   },
+
+   gpu48 = {
+      time_min = 0,
+      time_max = two_days
+   },
+
+   -- special QoS with user access control
+   
+   cpuplus = {
+      time_min = 0,
       time_max = seven_days,
-      users = { }
+      users = { "tmc8" }
    },
    
    gpuplus = {
       time_min = 0,
       time_max = seven_days,
-      users = { "RES" }
+      users = { }
    },
 
    sysadm = {
       time_min = 0,
       time_max = seven_days,
-      users = { "RES", "wang" }
+      users = { "wang" }
    }
-
-   --[[
-   qos48 = {
-      time_min = 0,
-      time_max = two_days,
-      users = { }
-   },
-   qos168 = {
-      time_min = two_days,
-      time_max = seven_days,
-      users = { }
-   },
-   qos48plus = {
-      time_min = 0,
-      time_max = two_days,
-      users = { "RES", "sw77", "wang" }
-   },
-   qos168plus = {
-      time_min = two_days,
-      time_max = seven_days,
-      users = { "RES" }
-   },
-   sysadm = {
-      time_min = 0,
-      time_max = seven_days,
-      users = { "RES", "wang" }
-   },
-   mhealth = {
-      time_min = 0,
-      time_max = two_days,
-      users = { "RES", "ak6179", "apd283", "kz918", "nn1119", "sb6065",
-                "wc1144", "xz1364", "yg1053", "yj426" }
-   }
-   --]]
 }
 
 local time_limit = 0
@@ -120,7 +89,7 @@ local function qos_is_valid(qos_name)
       return false
    else
       local users = qos.users
-      if #users > 0 and not princeUtils.in_table(users, user_netid) then
+      if users ~= nil and not princeUtils.in_table(users, user_netid) then
 	 user_log("No authorized QoS '%s'", qos_name)
 	 return false
       end
