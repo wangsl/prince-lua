@@ -49,9 +49,9 @@ local partition_groups = {
    },
 
    group_knl = { partitions = "knl",
-		 min_cpus = 64, max_cpus = 256, max_nodes = 1,
-		 min_memory = 185, max_memory = 185,
-		 min_ave_memory = 0, max_ave_memory = 185
+		 min_cpus = 256, max_cpus = 256, max_nodes = 1,
+		 min_memory = 0, max_memory = 202,
+		 min_ave_memory = 0, max_ave_memory = 202
    }
 }
 
@@ -133,6 +133,7 @@ local function partitions_are_valid(partitions)
       end
    end
    if not extra_checks_are_valid() then return false end
+
    return true
 end
 

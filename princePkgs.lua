@@ -11,10 +11,16 @@ local prince_pkgs_last_modification_time = { }
 
 local function unload_new_updated_packages()
    local prefix = "/share/apps/admins/slurm-lua/"
-   local pkgs = { "princeUtils.lua", "princeUsers.lua", "princeCPU.lua",
-		  "princeGPU.lua", "princeQoS.lua", "princeJob.lua",
+   local pkgs = { "princeUtils.lua",
+		  "princeUsers.lua",
+		  "princeCPU.lua",
+		  "princeGPU.lua",
+		  "princeQoS.lua",
+		  "princeJob.lua",
 		  "princePkgs.lua", 
-		  "prince.lua", "job_submit.lua"
+		  "prince.lua",
+		  "princeKNL.lua",
+		  "job_submit.lua"
    }
    
    local has_new_updated = false
