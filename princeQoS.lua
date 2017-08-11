@@ -44,8 +44,14 @@ local qos_all = {
       time_max = seven_days,
       users = { "tmc8" }
    },
-   
+
    gpuplus = {
+      time_min = 0,
+      time_max = seven_days,
+      users = { }
+   },
+
+   knl = {
       time_min = 0,
       time_max = seven_days,
       users = { }
