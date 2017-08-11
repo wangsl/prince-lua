@@ -191,6 +191,10 @@ local function compute_resources_are_valid()
 
    return true
 end
+
+local function set_exclusive_for_knl_partition()
+   if job_desc.partition == "knl" then job_desc.shared = 0 end
+end
 				   
 local function setup_routings()     
    set_default_compute_resources()
@@ -204,6 +208,7 @@ local function setup_routings()
    end
    
    assign_partitions()
+   set_exclusive_for_knl_partition()
 
    assign_qos()
 
@@ -211,6 +216,7 @@ local function setup_routings()
    
    if job_desc.partition ~= nil then slurm_log("partitions: %s", job_desc.partition) end
    if job_desc.qos ~= nil then slurm_log("QoS: %s", job_desc.qos) end
+   if job_desc.shared ~= uint16_NO_VAL then slurm_log("shared = %d", job_desc.shared) end
 end
 
 local function setup_parameters(args)
@@ -228,6 +234,4 @@ princeJob.setup_routings = setup_routings
 slurm_log("To load princeJob.lua")
 
 return princeJob
-
-
 
