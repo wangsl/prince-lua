@@ -46,6 +46,12 @@ local partition_groups = {
 		    min_cpus = 1, max_cpus = 48, max_nodes = 1,
 		    min_memory = 50, max_memory = 1500,
 		    min_ave_memory = 10, max_ave_memory = 1500
+   },
+
+   group_knl = { partitions = "knl",
+		 min_cpus = 64, max_cpus = 256, max_nodes = 1,
+		 min_memory = 185, max_memory = 185,
+		 min_ave_memory = 0, max_ave_memory = 185
    }
 }
 
@@ -53,7 +59,8 @@ local partition_group_names = { "group_20_62_16",
 				"group_28_250",
 				"group_28_125",
 				"group_28",
-				"group_bigmem" }
+				"group_bigmem"
+}
 
 local function setup_partition_to_partition_group()
    if not princeUtils.is_empty(partition_to_partition_group) then return end
@@ -72,7 +79,8 @@ local function fit_into_partition_group(group_name)
       if group.users ~= nil and not princeUtils.in_table(group.users, princeUsers.nyu_netid()) then
 	 return false
       end
-      if nodes <= group.max_nodes and cpus <= group.max_cpus and
+      if nodes <= group.max_nodes and
+	 group.min_cpus <= cpus and cpus <= group.max_cpus and
 	 group.min_memory <= memory and memory <= group.max_memory and
          group.min_ave_memory <= ave_memory and ave_memory <= group.max_ave_memory then
 	    return true
