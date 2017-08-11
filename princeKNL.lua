@@ -23,9 +23,9 @@ local function setup_parameters_and_check_is_OK(job_desc_)
    
    if job_desc.req_nodes ~= nil then slurm_log("req_nodes: %s", job_desc.req_nodes) end
    
-   job_desc.shared = 0
-   
    if not compute_node_is_OK() then return false end
+
+   job_desc.shared = 0
 
    job_desc.qos = "knl"
    slurm_log("QoS is reset to: %s", job_desc.qos)
