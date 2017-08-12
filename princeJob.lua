@@ -195,6 +195,14 @@ local function compute_resources_are_valid()
    end
    
    if job_desc.shared ~= uint16_NO_VAL then slurm_log("shared = %d", job_desc.shared) end
+
+   if job_desc.partition ~= "knl" then
+      local n_cpu_cores = job_desc.ntasks_per_node*job_desc.cpus_per_task*job_desc.min_nodes
+      if n_cpu_cores ~= nil and n_cpu_cores > 100 and job_desc.time_limit > princeUtils.two_days then
+	 user_log("Single job with wall time longer than 48 hours can not use more than 100 CPU cores")
+	 return false
+      end
+   end
    
    return true
 end
