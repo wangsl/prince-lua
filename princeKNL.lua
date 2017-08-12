@@ -12,7 +12,7 @@ local job_desc = nil
 local function compute_node_is_OK()
    if job_desc.req_nodes ~= nil and job_desc.req_nodes == "phi-01-02" and
       job_desc.pn_min_memory > 186*1024 then
-      user_log("Memory declrations can not be more than 186GB with phi-01-02")
+      user_log("Memory declaration can not be more than 186GB with phi-01-02")
       return false
    end
    return true
