@@ -200,6 +200,12 @@ local function compute_resources_are_valid()
 	 user_log("Single job with wall time longer than 48 hours can not use more than 100 CPU cores")
 	 return false
       end
+
+      if n_cpu_cores > 240 and job_desc.time_limit <= princeUtils.two_days then
+	 user_log("Single job with wall time less than 48 hours can not use more than 240 CPU cores")
+	 return false
+      end
+      
    end
 
    if job_desc.shared ~= uint16_NO_VAL then slurm_log("shared = %d", job_desc.shared) end
