@@ -194,15 +194,15 @@ local function compute_resources_are_valid()
       if not princeKNL.setup_parameters_and_check_is_OK(job_desc) then return false end
    end
    
-   if job_desc.shared ~= uint16_NO_VAL then slurm_log("shared = %d", job_desc.shared) end
-
    if job_desc.partition ~= "knl" then
       local n_cpu_cores = job_desc.ntasks_per_node*job_desc.cpus_per_task*job_desc.min_nodes
-      if n_cpu_cores ~= nil and n_cpu_cores > 100 and job_desc.time_limit > princeUtils.two_days then
+      if n_cpu_cores > 100 and job_desc.time_limit > princeUtils.two_days then
 	 user_log("Single job with wall time longer than 48 hours can not use more than 100 CPU cores")
 	 return false
       end
    end
+
+   if job_desc.shared ~= uint16_NO_VAL then slurm_log("shared = %d", job_desc.shared) end
    
    return true
 end
@@ -216,18 +216,17 @@ local function setup_routings()
       princeCPU.setup_parameters{cpus = n_cpus_per_node,
 				 memory = job_desc.pn_min_memory,
 				 nodes = job_desc.min_nodes }
-
+      
    end
    
    assign_partitions()
-
+   
    assign_qos()
-
+   
    -- print_job_desc()
    
    if job_desc.partition ~= nil then slurm_log("partitions: %s", job_desc.partition) end
    if job_desc.qos ~= nil then slurm_log("QoS: %s", job_desc.qos) end
-   -- if job_desc.shared ~= uint16_NO_VAL then slurm_log("shared = %d", job_desc.shared) end
 end
 
 local function setup_parameters(args)
