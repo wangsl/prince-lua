@@ -56,8 +56,8 @@ local partition_groups = {
 }
 
 local partition_group_names = { "group_20_62_16",
-				"group_28_250",
 				"group_28_125",
+				"group_28_250",
 				"group_28",
 				"group_bigmem"
 }
@@ -99,6 +99,7 @@ local function partition_is_valid(part_name)
 end
 
 local function assign_partitions()
+   if cpus == 28 and memory <= 125 then return "c01_17" end
    local partitions = nil
    for _, group_name in pairs(partition_group_names) do
       if fit_into_partition_group(group_name) then
@@ -117,6 +118,7 @@ local function extra_checks_are_valid()
       user_log("For job with memory between 250GB and 500GB per node, please declare no more than 20 CPU cores per node")
       return false
    end
+
    return true
 end
 
@@ -134,6 +136,11 @@ local function partitions_are_valid(partitions)
    end
    if not extra_checks_are_valid() then return false end
 
+   if cpus == 28 and memory <= 125 and partitions ~= "c01_17" then
+      user_log("For jobs with 28 CPU cores and <= 125GB memory, please use c01_17 partition only")
+      return false
+   end
+   
    return true
 end
 

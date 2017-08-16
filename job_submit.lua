@@ -18,8 +18,8 @@ function slurm_job_submit(job_desc, part_list, submit_uid)
    package.path = ';/share/apps/admins/slurm-lua/?.lua;' .. package.path
    package.cpath = ';/share/apps/admins/slurm-lua/?.so;' .. package.cpath
    
-   local princePkgs = require "princePkgs"
-   princePkgs.unload_new_updated_packages()
+   --local princePkgs = require "princePkgs"
+   --princePkgs.unload_new_updated_packages()
    
    local prince = require "prince"
    return prince.job_submission(job_desc, part_list, submit_uid)
@@ -36,6 +36,5 @@ end
 slurm.log_info("**** SLURM Lua plugin initialized with Lua version %s ****", _VERSION)
 
 return slurm.SUCCESS
-
 
 
