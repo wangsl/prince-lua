@@ -49,13 +49,22 @@ local partition_groups = {
    },
 
    group_knl = { partitions = "knl",
-		 min_cpus = 256, max_cpus = 256, max_nodes = 1,
+		 min_cpus = 1, max_cpus = 256, max_nodes = 1,
 		 min_memory = 0, max_memory = 202,
 		 min_ave_memory = 0, max_ave_memory = 202
+   },
+
+   xwang =  { partitions = "xwang-cpu",
+	      min_cpus = 1, max_cpus = 112, max_nodes = 4,
+	      min_memory = 0, max_memory = 250,
+	      min_ave_memory = 0, max_ave_memory = 250,
+	      users = { "xd432", "jj99", "bm98", "wwp3", "gy441",
+			"mj98", "jl9246", "mejmp20" }
    }
 }
 
-local partition_group_names = { "group_20_62_16",
+local partition_group_names = { "xwang",
+				"group_20_62_16",
 				"group_28_125",
 				"group_28_250",
 				"group_28",

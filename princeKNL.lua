@@ -25,7 +25,7 @@ local function setup_parameters_and_check_is_OK(job_desc_)
    
    if not compute_node_is_OK() then return false end
 
-   job_desc.shared = 0
+   --job_desc.shared = 0
 
    job_desc.qos = "knl"
    slurm_log("QoS is reset to: %s", job_desc.qos)
