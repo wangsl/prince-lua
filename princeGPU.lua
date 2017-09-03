@@ -50,11 +50,11 @@ local partition_configures = {
 	       { gpus = 3, max_cpus = 21, max_memory = 100 },
 	       { gpus = 4, max_cpus = 28, max_memory = 125 },
 	       users = { "ak6179", "apd283", "kz918", "nn1119", "sb6065",
-			 "wc1144", "xz1364", "yg1053", "yj426", "sw77" }
+			 "wc1144", "xz1364", "yg1053", "yj426" }
    }
 }
 
-local partitions = { "k80_8", "k80_4", "p1080_4", "mhealth" }
+local partitions = { "mhealth", "k80_8", "k80_4", "p1080_4" }
 
 local function gpu_type_is_valid(gpu_type)
    if gpu_type == nil then return true end
