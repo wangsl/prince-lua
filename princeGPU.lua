@@ -27,11 +27,11 @@ local partition_configures = {
    },
    
    k80_8 = { gpu = "k80",
-	     { gpus = 1, max_cpus = 1, max_memory = 15 },
-	     { gpus = 2, max_cpus = 2, max_memory = 30 },
-	     { gpus = 3, max_cpus = 3, max_memory = 45 },
+	     { gpus = 1, max_cpus = 1, max_memory = 20 },
+	     { gpus = 2, max_cpus = 2, max_memory = 40 },
+	     { gpus = 3, max_cpus = 3, max_memory = 50 },
 	     { gpus = 4, max_cpus = 4, max_memory = 60 },
-	     { gpus = 5, max_cpus = 5, max_memory = 75 },
+	     { gpus = 5, max_cpus = 5, max_memory = 80 },
 	     { gpus = 6, max_cpus = 6, max_memory = 90 },
 	     { gpus = 7, max_cpus = 7, max_memory = 105 },
 	     { gpus = 8, max_cpus = 8, max_memory = 120 }

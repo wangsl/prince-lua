@@ -16,6 +16,9 @@ local ave_memory = nil
 
 local partition_to_partition_group = { }
 
+local xwang_users = { "xd432", "jj99", "bm98", "wwp3", "gy441",
+		      "mj98", "jl9246", "mejmp20", "vg44", "ssf3" }
+
 local partition_groups = {
    
    group_20_62_16 = { partitions = "c26,c27,c28,c29,c30,c31",
@@ -58,8 +61,7 @@ local partition_groups = {
 	      min_cpus = 1, max_cpus = 112, max_nodes = 4,
 	      min_memory = 0, max_memory = 250,
 	      min_ave_memory = 0, max_ave_memory = 250,
-	      users = { "xd432", "jj99", "bm98", "wwp3", "gy441",
-			"mj98", "jl9246", "mejmp20", "vg44", "ssf3" }
+	      users = xwang_users
    }
 }
 
@@ -170,6 +172,4 @@ princeCPU.partitions_are_valid = partitions_are_valid
 slurm_log("To load princeCPU.lua")
 
 return princeCPU
-
-
 
