@@ -201,8 +201,8 @@ local function compute_resources_are_valid()
 	 return false
       end
       
-      if n_cpu_cores > 240 and job_desc.qos == "cpu48" then 
-	 user_log("Single job with wall time less than 48 hours can not use more than 240 CPU cores")
+      if n_cpu_cores > 256 and job_desc.qos == "cpu48" then 
+	 user_log("Single job with wall time less than 48 hours can not use more than 256 CPU cores")
 	 return false
       end
    end

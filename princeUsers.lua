@@ -72,6 +72,7 @@ local function nyu_netid()
 end
 
 -- functions
+
 princeUsers.nyu_netid = nyu_netid
 princeUsers.netid_is_blocked = netid_is_blocked
 
