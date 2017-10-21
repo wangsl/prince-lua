@@ -17,7 +17,8 @@ local ave_memory = nil
 local partition_to_partition_group = { }
 
 local xwang_users = { "xd432", "jj99", "bm98", "wwp3", "gy441",
-		      "mj98", "jl9246", "mejmp20", "vg44", "ssf3" }
+		      "mj98", "jl9246", "mejmp20", "vg44", "ssf3",
+		      "pz580", "dpb6" }
 
 local partition_groups = {
    
