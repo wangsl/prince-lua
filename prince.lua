@@ -12,9 +12,12 @@ local user_log = princeUtils.user_log
 
 local function job_submission(job_desc, part_list, submit_uid)
 
+   -- for HPC maintainance 
    if submit_uid > 1050 then
-      user_log("Prince is in maintennance today from 9am to 5pm, job submission is disabled")
-      return slurm.ERROR
+      if submit_uid ~= 1296493 and submit_uid ~= 2761180 then
+	 user_log("Prince is in maintennance today from 9am to 5pm, job submission is disabled")
+	 return slurm.ERROR
+      end
    end
 
    local time_start = time.getMicroseconds()
@@ -52,4 +55,6 @@ prince.job_modification = job_modification
 slurm_log("To load prince.lua")
 
 return prince
+
+
 

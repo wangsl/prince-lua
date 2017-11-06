@@ -23,10 +23,6 @@
 #include <lauxlib.h>
 #include <lualib.h>
 
-#ifndef LUA_API
-#define LUA_API  __declspec(dllexport)
-#endif
-
 #ifndef UINT
 #define UINT unsigned int
 #endif
@@ -69,7 +65,11 @@ static int t_micro(lua_State *L)
 }
 
 /* register functions */
+#if LUA_VERSION_NUM == 501
 static const struct luaL_reg time_lib [] = {
+#else
+static const struct luaL_Reg time_lib [] = {
+#endif
   {"getMiliseconds", t_mili},
   {"getSeconds", t_seconds},
   {"getMicroseconds", t_micro},
@@ -79,7 +79,11 @@ static const struct luaL_reg time_lib [] = {
 /* register lib */
 LUALIB_API int luaopen_time(lua_State *L)
 {
+#if LUA_VERSION_NUM == 501
   luaL_register(L, "time", time_lib);
+#else
+  luaL_newlib(L, time_lib);
+#endif
   info("              : To load time.so, loaded %d times", ++loaded_times);
   return 1;
 }
