@@ -12,6 +12,11 @@ local user_log = princeUtils.user_log
 
 local function job_submission(job_desc, part_list, submit_uid)
 
+   if submit_uid > 1050 then
+      user_log("Prince is in maintennance today from 9am to 5pm, job submission is disabled")
+      return slurm.ERROR
+   end
+
    local time_start = time.getMicroseconds()
    
    if princeUsers.netid_is_blocked(submit_uid) then return slurm.ERROR end
