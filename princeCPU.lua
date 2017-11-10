@@ -20,6 +20,8 @@ local xwang_users = { "xd432", "jj99", "bm98", "wwp3", "gy441",
 		      "mj98", "jl9246", "mejmp20", "vg44", "ssf3",
 		      "pz580", "dpb6" }
 
+local test_users = { "wang", "deng", "sw77", "wd35" }
+
 local partition_groups = {
    
    group_20_62_16 = { partitions = "c26,c27,c28,c29,c30,c31",
@@ -54,8 +56,29 @@ local partition_groups = {
 
    group_knl = { partitions = "knl",
 		 min_cpus = 1, max_cpus = 256, max_nodes = 1,
-		 min_memory = 0, max_memory = 202,
-		 min_ave_memory = 0, max_ave_memory = 202
+		 min_memory = 0, max_memory = 186,
+		 min_ave_memory = 0, max_ave_memory = 186
+   },
+
+   group_c32_38 = { partitions = "c32_38",
+		    min_cpus = 1, max_cpus = 20, max_nodes = 112,
+		    min_memory = 0, max_memory = 62,
+		    min_ave_memory = 0, max_ave_memory = 6,
+		    users = test_users
+   },
+
+   group_c39_41 = { partitions = "c39_41",
+		    min_cpus = 1, max_cpus = 20, max_nodes = 40,
+		    min_memory = 0, max_memory = 188,
+		    min_ave_memory = 0, max_ave_memory = 40,
+		    users = test_users
+   },
+
+   group_c32_41 = { partitions = "c32_41",
+		    min_cpus = 1, max_cpus = 20, max_nodes = 150,
+		    min_memory = 0, max_memory = 62,
+		    min_ave_memory = 0, max_ave_memory = 6,
+		    users = test_users
    },
 
    xwang =  { partitions = "xwang-cpu",
@@ -68,6 +91,9 @@ local partition_groups = {
 
 local partition_group_names = { "xwang",
 				"group_20_62_16",
+				"group_c32_38",
+				"group_c39_41",
+				"group_c32_41",
 				"group_28_125",
 				"group_28_250",
 				"group_28",

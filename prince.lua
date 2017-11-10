@@ -12,6 +12,7 @@ local user_log = princeUtils.user_log
 
 local function job_submission(job_desc, part_list, submit_uid)
 
+   --[[
    -- for HPC maintainance 
    if submit_uid > 1050 then
       if submit_uid ~= 1296493 and submit_uid ~= 2761180 then
@@ -19,6 +20,7 @@ local function job_submission(job_desc, part_list, submit_uid)
 	 return slurm.ERROR
       end
    end
+   --]]
 
    local time_start = time.getMicroseconds()
    
