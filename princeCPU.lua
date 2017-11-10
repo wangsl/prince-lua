@@ -63,22 +63,19 @@ local partition_groups = {
    group_c32_38 = { partitions = "c32_38",
 		    min_cpus = 1, max_cpus = 20, max_nodes = 112,
 		    min_memory = 0, max_memory = 62,
-		    min_ave_memory = 0, max_ave_memory = 6,
-		    users = test_users
+		    min_ave_memory = 0, max_ave_memory = 6
    },
 
    group_c39_41 = { partitions = "c39_41",
 		    min_cpus = 1, max_cpus = 20, max_nodes = 40,
 		    min_memory = 0, max_memory = 188,
-		    min_ave_memory = 0, max_ave_memory = 40,
-		    users = test_users
+		    min_ave_memory = 0, max_ave_memory = 60,
    },
 
    group_c32_41 = { partitions = "c32_41",
 		    min_cpus = 1, max_cpus = 20, max_nodes = 150,
 		    min_memory = 0, max_memory = 62,
-		    min_ave_memory = 0, max_ave_memory = 6,
-		    users = test_users
+		    min_ave_memory = 0, max_ave_memory = 6
    },
 
    xwang =  { partitions = "xwang-cpu",
