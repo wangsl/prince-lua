@@ -4,6 +4,7 @@ local princeCPU = { }
 
 local princeUtils = require "princeUtils"
 local princeUsers = require "princeUsers"
+local princeStakeholders = require "princeStakeholders"
 
 local slurm_log = princeUtils.slurm_log
 local user_log = princeUtils.user_log
@@ -15,12 +16,6 @@ local nodes = 0
 local ave_memory = nil
 
 local partition_to_partition_group = { }
-
-local xwang_users = { "xd432", "jj99", "bm98", "wwp3", "gy441",
-		      "mj98", "jl9246", "mejmp20", "vg44", "ssf3",
-		      "pz580", "dpb6" }
-
-local test_users = { "wang", "deng", "sw77", "wd35" }
 
 local partition_groups = {
    
@@ -82,18 +77,18 @@ local partition_groups = {
 	      min_cpus = 1, max_cpus = 112, max_nodes = 4,
 	      min_memory = 0, max_memory = 250,
 	      min_ave_memory = 0, max_ave_memory = 250,
-	      users = xwang_users
+	      users = princeStakeholders.cns_wang_users 
    }
 }
 
 local partition_group_names = { "xwang",
-				"group_20_62_16",
 				"group_c32_38",
-				"group_c39_41",
 				"group_c32_41",
+				"group_c39_41",
+				"group_20_62_16",
 				"group_28_125",
-				"group_28_250",
 				"group_28",
+				"group_28_250",
 				"group_bigmem"
 }
 

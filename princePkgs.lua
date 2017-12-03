@@ -20,6 +20,7 @@ local function unload_new_updated_packages()
 		  "princePkgs.lua", 
 		  "prince.lua",
 		  "princeKNL.lua",
+		  "princeStakeholders.lua",
 		  "job_submit.lua"
    }
    

@@ -4,6 +4,7 @@ local princeGPU = { }
 
 local princeUtils = require "princeUtils"
 local princeUsers = require "princeUsers"
+local princeStakeholders = require "princeStakeholders"
 
 local slurm_log = princeUtils.slurm_log
 local user_log = princeUtils.user_log
@@ -16,10 +17,6 @@ local memory = 0
 local gpu_type = nil
 
 local available_gpu_types = { "k80", "p1080" }
-
-local mhealth_users = { "ak6179", "apd283", "kz918", "nn1119", "sb6065",
-			"wc1144", "xz1364", "yg1053", "yj426", "asw462",
-			"ns3807" }
 
 local partition_configures = {
    
@@ -53,7 +50,7 @@ local partition_configures = {
 	       { gpus = 2, max_cpus = 14, max_memory = 75 },
 	       { gpus = 3, max_cpus = 21, max_memory = 100 },
 	       { gpus = 4, max_cpus = 28, max_memory = 125 },
-	       users = mhealth_users 
+	       users = princeStakeholders.mhealth_users 
    }
 }
 
