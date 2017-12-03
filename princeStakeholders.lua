@@ -1,11 +1,10 @@
 #!/bin/env lua
 
+local princeStakeholders = { }
+
 local princeUtils = require "princeUtils"
 
 local slurm_log = princeUtils.slurm_log
-
-local princeStakeholders = { }
-
 
 local cns_wang_users = { "xd432", "jj99", "bm98", "wwp3", "gy441",
 			 "mj98", "jl9246", "mejmp20", "vg44", "ssf3",
