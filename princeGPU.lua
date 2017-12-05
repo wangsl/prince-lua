@@ -77,7 +77,7 @@ local partition_configures = {
    
 }
 
-local partitions = { "xwang_gpu", "mhealth", "k80_8", "k80_4", "p40_4", "p100_4", "p1080_4" }
+local partitions = { "xwang_gpu", "mhealth", "k80_8", "k80_4", "p1080_4", "p40_4", "p100_4" }
 
 local function gpu_type_is_valid(gpu_type)
    if gpu_type == nil then return true end
