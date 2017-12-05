@@ -73,7 +73,7 @@ local partition_groups = {
 		    min_ave_memory = 0, max_ave_memory = 6
    },
 
-   xwang =  { partitions = "xwang-cpu",
+   xwang =  { partitions = "xwang_cpu",
 	      min_cpus = 1, max_cpus = 112, max_nodes = 4,
 	      min_memory = 0, max_memory = 250,
 	      min_ave_memory = 0, max_ave_memory = 250,

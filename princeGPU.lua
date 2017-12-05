@@ -16,7 +16,7 @@ local cpus = 0
 local memory = 0
 local gpu_type = nil
 
-local available_gpu_types = { "k80", "p1080" }
+local available_gpu_types = { "k80", "p1080", "p100", "p40" }
 
 local partition_configures = {
    
@@ -44,6 +44,20 @@ local partition_configures = {
 	       { gpus = 3, max_cpus = 21, max_memory = 100 },
 	       { gpus = 4, max_cpus = 28, max_memory = 125 }
    },
+   
+   p40_4 = { gpu = "p40",
+	     { gpus = 1, max_cpus = 7,  max_memory = 100 },
+	     { gpus = 2, max_cpus = 14, max_memory = 150 },
+	     { gpus = 3, max_cpus = 21, max_memory = 200 },
+	     { gpus = 4, max_cpus = 28, max_memory = 250 }
+   },
+
+   p100_4 = { gpu = "p100",
+	     { gpus = 1, max_cpus = 7,  max_memory = 100 },
+	     { gpus = 2, max_cpus = 14, max_memory = 150 },
+	     { gpus = 3, max_cpus = 21, max_memory = 200 },
+	     { gpus = 4, max_cpus = 28, max_memory = 250 }
+   },
 
    mhealth = { gpu = "p1080",
 	       { gpus = 1, max_cpus = 7,  max_memory = 50 },
@@ -51,10 +65,19 @@ local partition_configures = {
 	       { gpus = 3, max_cpus = 21, max_memory = 100 },
 	       { gpus = 4, max_cpus = 28, max_memory = 125 },
 	       users = princeStakeholders.mhealth_users 
-   }
+   },
+
+   xwang_gpu = { gpu = "p40",
+	     { gpus = 1, max_cpus = 7,  max_memory = 100 },
+	     { gpus = 2, max_cpus = 14, max_memory = 150 },
+	     { gpus = 3, max_cpus = 21, max_memory = 200 },
+	     { gpus = 4, max_cpus = 28, max_memory = 250 },
+	     users = princeStakeholders.cns_wang_users 
+   },
+   
 }
 
-local partitions = { "mhealth", "k80_8", "k80_4", "p1080_4" }
+local partitions = { "xwang_gpu", "mhealth", "k80_8", "k80_4", "p40_4", "p100_4", "p1080_4" }
 
 local function gpu_type_is_valid(gpu_type)
    if gpu_type == nil then return true end
