@@ -37,3 +37,4 @@ end
 slurm.log_info("**** SLURM Lua plugin initialized with Lua version %s ****", _VERSION)
 
 return slurm.SUCCESS
+
