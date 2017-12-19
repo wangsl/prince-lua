@@ -21,7 +21,7 @@ function slurm_job_submit(job_desc, part_list, submit_uid)
    
    -- local princePkgs = require "princePkgs"
    -- princePkgs.unload_new_updated_packages()
-   
+
    local prince = require "prince"
    return prince.job_submission(job_desc, part_list, submit_uid)
 end
@@ -37,4 +37,6 @@ end
 slurm.log_info("**** SLURM Lua plugin initialized with Lua version %s ****", _VERSION)
 
 return slurm.SUCCESS
+
+
 

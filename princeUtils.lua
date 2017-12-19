@@ -20,6 +20,10 @@ local function in_table(tbl, item)
    return false
 end
 
+local function insert_to_table_if_not_exist(tbl, item)
+   if not in_table(tbl, item) then table.insert(tbl, item) end
+end
+
 local function is_empty(t)
    for _, _ in pairs(t) do return false end
    return true
@@ -33,6 +37,7 @@ end
 
 princeUtils.split = split
 princeUtils.in_table = in_table
+princeUtils.insert_to_table_if_not_exist = insert_to_table_if_not_exist
 princeUtils.is_empty = is_empty
 
 -- data
