@@ -4,6 +4,11 @@ local princeUtils = { }
 
 local two_days = 2880 -- in mins
 local seven_days = 10080 -- in mins
+local unlimited_time = 525600 -- one year in mins
+
+local function mins_to_days(mins)
+   return mins/60/24
+end
 
 local function split(s, delimiter)
    local result = {}
@@ -14,7 +19,7 @@ local function split(s, delimiter)
 end
 
 local function in_table(tbl, item)
-   for key, value in pairs(tbl) do
+   for _, value in pairs(tbl) do
       if value == item then return true end
    end
    return false
@@ -40,10 +45,13 @@ princeUtils.in_table = in_table
 princeUtils.insert_to_table_if_not_exist = insert_to_table_if_not_exist
 princeUtils.is_empty = is_empty
 
+princeUtils.mins_to_days = mins_to_days
+
 -- data
 
 princeUtils.two_days = two_days
 princeUtils.seven_days = seven_days
+princeUtils.unlimited_time = unlimited_time
 
 -- princeUtils.slurm_log = slurm_log
 -- princeUtils.user_log = slurm_log

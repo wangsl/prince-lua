@@ -184,7 +184,7 @@ local function partitions_are_valid(partitions_)
 end
 
 local function setup_parameters(args)
-   gpus = args.gpus or 1
+   gpus = args.gpus -- or 1
    cpus = args.cpus or 1
    memory = args.memory/1024 or 2 -- in GB
    gpu_type = args.gpu_type or nil

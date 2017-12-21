@@ -14,6 +14,8 @@ local mhealth_users = { "apd283", "kz918", "nn1119", "sb6065",
 			"wc1144", "xz1364", "yg1053", "yj426", "asw462",
 			"ns3807" }
 
+local users_with_unlimited_wall_time = { "qhv200" }
+
 local test_users = { "wang", "sw77", "deng", "wd35" }
 
 -- data
@@ -21,6 +23,7 @@ local test_users = { "wang", "sw77", "deng", "wd35" }
 princeStakeholders.cns_wang_users = cns_wang_users
 princeStakeholders.mhealth_users = mhealth_users
 princeStakeholders.test_users = test_users
+princeStakeholders.users_with_unlimited_wall_time = users_with_unlimited_wall_time
 
 slurm_log("To load princeStakeholders.lua")
 

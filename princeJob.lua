@@ -8,6 +8,7 @@ local princeCPU = require "princeCPU"
 local princeGPU = require "princeGPU"
 local princeQoS = require "princeQoS"
 local princeKNL = require "princeKNL"
+local princeStakeholders = require "princeStakeholders"
 
 local slurm_log = princeUtils.slurm_log
 local user_log = princeUtils.user_log
@@ -35,11 +36,22 @@ local function memory_is_specified(mem)
 end
 
 local function input_compute_resources_are_valid()
-   if job_desc.time_limit ~= uint32_NO_VAL and job_desc.time_limit > princeUtils.seven_days then
-      user_log("Maximum wall time is %d days", princeUtils.seven_days/60/24)
-      return false
-   end
 
+   if job_desc.time_limit ~= uint32_NO_VAL then
+      
+      if princeUtils.in_table(princeStakeholders.users_with_unlimited_wall_time, princeUsers.nyu_netid()) then
+	 if job_desc.time_limit > princeUtils.unlimited_time then
+	    user_log("Maximum wall time is %d days", princeUtils.mins_to_days(princeUtils.unlimited_time))
+	    return false
+	 end
+      else
+	 if job_desc.time_limit > princeUtils.seven_days then
+	    user_log("Maximum wall time is %d days", princeUtils.mins_to_days(princeUtils.seven_days))
+	    return false
+	 end
+      end
+   end
+   
    if job_desc.gres ~= nil then
       if not princeGPU.gpu_type_from_gres_is_valid(job_desc.gres) then return false end
    end

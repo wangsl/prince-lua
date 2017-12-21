@@ -3,9 +3,11 @@
 local princeQoS = { }
 
 local princeUtils = require "princeUtils"
+local princeStakeholders = require "princeStakeholders"
 
 local two_days = princeUtils.two_days
 local seven_days = princeUtils.seven_days
+local unlimited_time = princeUtils.unlimited_time
 
 local slurm_log = princeUtils.slurm_log
 local user_log = princeUtils.user_log
@@ -43,6 +45,12 @@ local qos_all = {
       time_min = 0,
       time_max = seven_days,
       users = { "cd2209" }
+   },
+
+   cpu365 = {
+      time_min = seven_days,
+      time_max = unlimited_time,
+      users = princeStakeholders.users_with_unlimited_wall_time
    },
 
    gpuplus = {
