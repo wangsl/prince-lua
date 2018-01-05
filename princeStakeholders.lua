@@ -14,7 +14,7 @@ local mhealth_users = { "apd283", "kz918", "nn1119", "sb6065",
 			"wc1144", "xz1364", "yg1053", "yj426", "asw462",
 			"ns3807" }
 
-local users_with_unlimited_wall_time = { "qhv200" }
+local users_with_unlimited_wall_time = { }
 
 local test_users = { "wang", "sw77", "deng", "wd35" }
 
