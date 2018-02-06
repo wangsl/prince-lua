@@ -145,7 +145,7 @@ end
 
 local function extra_checks_are_valid()
    if 250 < memory and memory <= 500 and cpus > 20 then
-      user_log("For job with memory between 250GB and 500GB per node, please declare no more than 20 CPU cores per node")
+      user_log("For job with memory between 250GB and 500GB per node, please request no more than 20 CPU cores per node")
       return false
    end
 
