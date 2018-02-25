@@ -21,6 +21,7 @@ local function unload_new_updated_packages()
 		  "prince.lua",
 		  "princeKNL.lua",
 		  "princeStakeholders.lua",
+		  "princeReservation.lua",
 		  "job_submit.lua"
    }
    

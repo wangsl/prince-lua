@@ -10,6 +10,8 @@ local princeQoS = require "princeQoS"
 local princeKNL = require "princeKNL"
 local princeStakeholders = require "princeStakeholders"
 
+local princeReservation = require "princeReservation"
+
 local slurm_log = princeUtils.slurm_log
 local user_log = princeUtils.user_log
 
@@ -36,6 +38,8 @@ local function memory_is_specified(mem)
 end
 
 local function input_compute_resources_are_valid()
+
+  if not princeReservation.check_reservation_is_OK(job_desc) then return false; end
 
    if job_desc.time_limit ~= uint32_NO_VAL then
       
