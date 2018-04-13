@@ -28,6 +28,7 @@ local job_desc = nil
 local n_cpus_per_node = nil
 
 local gpu_job = false
+local n_gpus_per_node = 0
 
 local function memory_is_specified(mem)
    if mem == nil or mem > bigIntNumber then
@@ -102,9 +103,10 @@ local function setup_gpu_job()
    if job_desc.gres ~= nil then
       gpu_type, gpus = princeGPU.gres_for_gpu(job_desc.gres)
    end
-   
+
    if gpus > 0 then
       gpu_job = true
+      n_gpus_per_node = gpus
       princeGPU.setup_parameters{ gpus = gpus, cpus = n_cpus_per_node,
 				  memory = job_desc.pn_min_memory,
 				  gpu_type = gpu_type }
@@ -195,12 +197,30 @@ local function assign_qos()
    if job_desc.qos == nil then job_desc.qos = princeQoS.assign_qos() end
 end
 
+local function job_with_multiple_gpu_cards_is_ok()
+
+   if princeUtils.in_table(princeStakeholders.special_gpu_users, princeUsers.nyu_netid()) then return true end
+
+   if job_desc.min_nodes > 1 then
+      user_log("GPU jobs with multiuple compute nodes are disabled by default, please contact hpc@nyu.edu for help")
+      return false
+   end
+
+   if n_gpus_per_node > 1 then
+      user_log("GPU jobs with multiuple GPU cards per node are disabled by default, please contact hpc@nyu.edu for help")
+      return false
+   end
+
+   return true
+end
+
 local function compute_resources_are_valid()
    -- check QoS
    if not princeQoS.qos_is_valid(job_desc.qos) then return false end
 
    -- check partitions
    if gpu_job then
+      if not job_with_multiple_gpu_cards_is_ok() then return false end
       if not princeGPU.partitions_are_valid(job_desc.partition) then return false end
    else
       if not princeCPU.partitions_are_valid(job_desc.partition) then return false end

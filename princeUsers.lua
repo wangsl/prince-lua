@@ -3,6 +3,7 @@
 local princeUsers = { }
 
 local princeUtils = require "princeUtils"
+local princeStakeholders = require "princeStakeholders"
 
 local slurm_log = princeUtils.slurm_log
 local user_log = princeUtils.user_log
@@ -15,7 +16,7 @@ users["1042"] = "peskin"
 users["1044"] = "teague"
 users["1045"] = "polunina"
 
-local blocked_netids = { }
+local blocked_netids = princeStakeholders.blocked_netids
 
 local netid = nil
 

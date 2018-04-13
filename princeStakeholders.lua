@@ -8,15 +8,19 @@ local slurm_log = princeUtils.slurm_log
 
 local cns_wang_users = { "xd432", "jj99", "bm98", "wwp3", "gy441",
 			 "mj98", "jl9246", "mejmp20", "vg44", "ssf3",
-			 "pz580", "dpb6" }
+			 "pz580", "dpb6", " pt49" }
 
 local mhealth_users = { "apd283", "kz918", "nn1119", "sb6065",
 			"wc1144", "xz1364", "yg1053", "yj426", "asw462",
-			"ns3807" }
+			"ns3807", "as10656" }
 
-local users_with_unlimited_wall_time = { }
+local users_with_unlimited_wall_time = { "sw77" }
 
 local test_users = { "wang", "sw77", "deng", "wd35" }
+
+local special_gpu_users = { "wang" }
+
+local blocked_netids = { }
 
 -- data
 
@@ -24,6 +28,9 @@ princeStakeholders.cns_wang_users = cns_wang_users
 princeStakeholders.mhealth_users = mhealth_users
 princeStakeholders.test_users = test_users
 princeStakeholders.users_with_unlimited_wall_time = users_with_unlimited_wall_time
+
+princeStakeholders.blocked_netids = blocked_netids
+princeStakeholders.special_gpu_users = special_gpu_users
 
 slurm_log("To load princeStakeholders.lua")
 

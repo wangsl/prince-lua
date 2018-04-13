@@ -17,6 +17,7 @@ local memory = 0
 local gpu_type = nil
 
 local available_gpu_types = { "k80", "p1080", "p100", "p40" }
+--local available_gpu_types = { "p1080", "p100", "p40" }
 
 local partition_configures = {
    
@@ -79,8 +80,18 @@ local partition_configures = {
 local partitions = { "xwang_gpu", "mhealth",
 		     "k80_8", "k80_4", "p40_4", "p1080_4", "p100_4" }
 
+-- local partitions = { "xwang_gpu", "mhealth", "p40_4", "p1080_4", "p100_4" }
+
 local function gpu_type_is_valid(gpu_type)
    if gpu_type == nil then return true end
+
+   --[[
+   if gpu_type == "k80" then
+      user_log("k80 cards are not available now")
+      return false
+   end
+   --]]
+   
    if princeUtils.in_table(available_gpu_types, gpu_type) then
       return true
    else
