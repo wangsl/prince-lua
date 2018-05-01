@@ -113,7 +113,7 @@ end
 
 princeReservation.check_reservation_is_OK = check_reservation_is_OK
 
-slurm_log("To load princeReservation")
+slurm_log("To load princeReservation.lua")
 
 return princeReservation
 

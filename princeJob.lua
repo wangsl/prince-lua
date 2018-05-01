@@ -61,7 +61,7 @@ local function input_compute_resources_are_valid()
       if not princeGPU.gpu_type_from_gres_is_valid(job_desc.gres) then return false end
    end
 
-   if job_desc.num_tasks ~= uint32_NO_VAL and job_desc.ntasks_per_node == uint16_NO_VAL then 
+   if job_desc.num_tasks ~= uint32_NO_VAL and job_desc.ntasks_per_node == uint16_NO_VAL then
       user_log("Plase do not specify --ntasks on prince cluster, try to use --nodes and --tasks-per-node together")
       return false
    end
@@ -206,10 +206,12 @@ local function job_with_multiple_gpu_cards_is_ok()
       return false
    end
 
+   --[[
    if n_gpus_per_node > 1 then
       user_log("GPU jobs with multiuple GPU cards per node are disabled by default, please contact hpc@nyu.edu for help")
       return false
    end
+   --]]
 
    return true
 end
@@ -237,8 +239,12 @@ local function compute_resources_are_valid()
 	 return false
       end
       
-      if n_cpu_cores > 420 and job_desc.qos == "cpu48" then 
-	 user_log("Single job with wall time less than 48 hours can not use more than 420 CPU cores")
+      if job_desc.num_tasks ~= uint32_NO_VAL then
+	 n_cpu_cores = math.max(job_desc.num_tasks, n_cpu_cores)
+      end
+      
+      if n_cpu_cores > 200 and job_desc.qos == "cpu48" then 
+	 user_log("Single job with wall time less than 48 hours can not use more than 200 CPU cores")
 	 return false
       end
    end

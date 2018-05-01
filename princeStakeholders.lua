@@ -14,11 +14,12 @@ local mhealth_users = { "apd283", "kz918", "nn1119", "sb6065",
 			"wc1144", "xz1364", "yg1053", "yj426", "asw462",
 			"ns3807", "as10656" }
 
-local users_with_unlimited_wall_time = { "sw77" }
+local users_with_unlimited_wall_time = { "sw77", "qhv200" }
 
 local test_users = { "wang", "sw77", "deng", "wd35" }
 
-local special_gpu_users = { "wang" }
+-- for users to request more than 1 GPU card per job
+local special_gpu_users = { "wang" } --, "aat414", "tm2761", "as11419" }
 
 local blocked_netids = { }
 
@@ -28,7 +29,6 @@ princeStakeholders.cns_wang_users = cns_wang_users
 princeStakeholders.mhealth_users = mhealth_users
 princeStakeholders.test_users = test_users
 princeStakeholders.users_with_unlimited_wall_time = users_with_unlimited_wall_time
-
 princeStakeholders.blocked_netids = blocked_netids
 princeStakeholders.special_gpu_users = special_gpu_users
 

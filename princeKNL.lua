@@ -37,7 +37,7 @@ end
 
 princeKNL.setup_parameters_and_check_is_OK = setup_parameters_and_check_is_OK
 
-slurm_log("To load princeKNL")
+slurm_log("To load princeKNL.lua")
 
 return princeKNL
 
