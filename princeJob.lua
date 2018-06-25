@@ -224,6 +224,12 @@ local function compute_resources_are_valid()
    if gpu_job then
       if not job_with_multiple_gpu_cards_is_ok() then return false end
       if not princeGPU.partitions_are_valid(job_desc.partition) then return false end
+      
+      if job_desc.shared ~= uint16_NO_VAL then
+	 user_log("exclusive use GPU node is disabled on prince cluster")
+	 return false
+      end
+      
    else
       if not princeCPU.partitions_are_valid(job_desc.partition) then return false end
    end
@@ -243,10 +249,16 @@ local function compute_resources_are_valid()
 	 n_cpu_cores = math.max(job_desc.num_tasks, n_cpu_cores)
       end
       
-      if n_cpu_cores > 200 and job_desc.qos == "cpu48" then 
-	 user_log("Single job with wall time less than 48 hours can not use more than 200 CPU cores")
+      if n_cpu_cores > 400 and job_desc.qos == "cpu48" then 
+	 user_log("Single job with wall time less than 48 hours can not use more than 400 CPU cores")
 	 return false
       end
+
+      if n_cpu_cores > 100 and job_desc.qos == "cpu168" then 
+	 user_log("Single job with wall time between 48 and 168 hours can not use more than 100 CPU cores")
+	 return false
+      end
+      
    end
 
    if job_desc.shared ~= uint16_NO_VAL then slurm_log("shared = %d", job_desc.shared) end

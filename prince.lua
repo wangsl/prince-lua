@@ -16,7 +16,7 @@ local function job_submission(job_desc, part_list, submit_uid)
    --[[
    if submit_uid > 1050 then
       if submit_uid ~= 1296493 and submit_uid ~= 2761180 then
-	 user_log("Prince is in maintennance today from 9am to 5pm, job submission is disabled")
+	 user_log("Prince is in maintennance today from 8am to 8pm, job submission is disabled")
 	 return slurm.ERROR
       end
    end

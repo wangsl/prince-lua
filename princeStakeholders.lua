@@ -12,14 +12,15 @@ local cns_wang_users = { "xd432", "jj99", "bm98", "wwp3", "gy441",
 
 local mhealth_users = { "apd283", "kz918", "nn1119", "sb6065",
 			"wc1144", "xz1364", "yg1053", "yj426", "asw462",
-			"ns3807", "as10656" }
+			"ns3807", "as10656", "pa1303",
+			"cm4698", "ic1018",  "jz2575", "gc2300" }
 
-local users_with_unlimited_wall_time = { "sw77", "qhv200" }
+local users_with_unlimited_wall_time = { "sw77" }
 
 local test_users = { "wang", "sw77", "deng", "wd35" }
 
--- for users to request more than 1 GPU card per job
-local special_gpu_users = { "wang" } --, "aat414", "tm2761", "as11419" }
+-- users to request more than 1 GPU node per job
+local special_gpu_users = { "wang" }
 
 local blocked_netids = { }
 
@@ -35,4 +36,6 @@ princeStakeholders.special_gpu_users = special_gpu_users
 slurm_log("To load princeStakeholders.lua")
 
 return princeStakeholders
+
+
 
