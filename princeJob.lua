@@ -93,6 +93,8 @@ local function print_job_desc()
    if job_desc.partition ~= nil then slurm_log("partitions: %s", job_desc.partition) end
    
    if job_desc.gres ~= nil then slurm_log("gres: %s", job_desc.gres) end
+
+   if job_desc.features ~= nil then slurm_log("features: %s", job_desc.features) end
 end
 
 local function setup_gpu_job()
@@ -281,8 +283,8 @@ local function setup_routings()
    assign_partitions()
    
    assign_qos()
-   
-   -- print_job_desc()
+
+   -- if princeUsers.nyu_netid() == "wang" then print_job_desc() end
    
    if job_desc.partition ~= nil then slurm_log("partitions: %s", job_desc.partition) end
    if job_desc.qos ~= nil then slurm_log("QoS: %s", job_desc.qos) end

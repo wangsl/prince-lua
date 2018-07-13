@@ -16,7 +16,7 @@ local cpus = 0
 local memory = 0
 local gpu_type = nil
 
-local available_gpu_types = { "k80", "p1080", "p100", "p40" }
+local available_gpu_types = { "k80", "p1080", "p100", "p40", "v100" }
 --local available_gpu_types = { "p1080", "p100", "p40" }
 
 local partition_configures = {
@@ -60,6 +60,11 @@ local partition_configures = {
 	     { gpus = 4, max_cpus = 28, max_memory = 250 }
    },
 
+   v100_pci_2 = { gpu = "v100",
+	     { gpus = 1, max_cpus = 20,  max_memory = 100 },
+	     { gpus = 2, max_cpus = 40, max_memory = 185 }
+   },
+
    mhealth = { gpu = "p1080",
 	       { gpus = 1, max_cpus = 7,  max_memory = 50 },
 	       { gpus = 2, max_cpus = 14, max_memory = 75 },
@@ -78,7 +83,7 @@ local partition_configures = {
 }
 
 local partitions = { "xwang_gpu", "mhealth",
-		     "k80_8", "k80_4", "p40_4", "p1080_4", "p100_4" }
+		     "k80_8", "k80_4", "p40_4", "p1080_4", "p100_4", "v100_pci_2" }
 
 -- local partitions = { "xwang_gpu", "mhealth", "p40_4", "p1080_4", "p100_4" }
 

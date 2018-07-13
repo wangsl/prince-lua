@@ -12,9 +12,11 @@ local users = { }
 users["1015"] = "wang"
 users["1032"] = "stratos"
 users["1041"] = "deng"
-users["1042"] = "peskin"
+--users["1042"] = "peskin"
 users["1044"] = "teague"
 users["1045"] = "polunina"
+users["1048"] = "dedits"
+users["50202"] = "gencore"
 
 local blocked_netids = princeStakeholders.blocked_netids
 
