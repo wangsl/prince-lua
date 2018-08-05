@@ -6,6 +6,8 @@ local two_days = 2880 -- in mins
 local seven_days = 10080 -- in mins
 local unlimited_time = 525600 -- one year in mins
 
+local maintennance_mode = false
+
 local function mins_to_days(mins)
    return mins/60/24
 end
@@ -58,6 +60,8 @@ princeUtils.unlimited_time = unlimited_time
 
 princeUtils.slurm_log = slurm.log_info
 princeUtils.user_log = slurm.log_user
+
+princeUtils.maintennance_mode = maintennance_mode
 
 princeUtils.slurm_log("To load princeUtils.lua")
 
