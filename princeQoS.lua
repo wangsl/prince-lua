@@ -44,7 +44,7 @@ local qos_all = {
    cpuplus = {
       time_min = 0,
       time_max = seven_days,
-      users = { "rg187", "qhv200", "yz59" }
+      users = { "rg187", "qhv200", "yz59", "ag4680" }
    },
 
    cpu365 = {

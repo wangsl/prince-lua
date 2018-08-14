@@ -61,7 +61,7 @@ princeUtils.unlimited_time = unlimited_time
 princeUtils.slurm_log = slurm.log_info
 princeUtils.user_log = slurm.log_user
 
-princeUtils.maintennance_mode = maintennance_mode
+princeUtils.maintenance_mode = maintenance_mode
 
 princeUtils.slurm_log("To load princeUtils.lua")
 

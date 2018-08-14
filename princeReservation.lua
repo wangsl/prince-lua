@@ -102,9 +102,7 @@ end
 local function check_reservation_is_OK(job_desc_)
    job_desc = job_desc_
 
-   if job_desc.reservation == "morari" then
-      return check_reservation_morari_is_OK()
-   end
+   -- if job_desc.reservation == "morari" then return check_reservation_morari_is_OK() end
 
    return true
 end
