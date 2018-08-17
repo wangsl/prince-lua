@@ -22,48 +22,48 @@ local available_gpu_types = { "k80", "p1080", "p100", "p40", "v100" }
 local partition_configures = {
    
    k80_4 = { gpu = "k80",
-	     { gpus = 1, max_cpus = 7,  max_memory = 100 },
+	     { gpus = 1, max_cpus = 10,  max_memory = 100 },
 	     { gpus = 2, max_cpus = 14, max_memory = 150 },
-	     { gpus = 3, max_cpus = 21, max_memory = 200 },
+	     { gpus = 3, max_cpus = 24, max_memory = 200 },
 	     { gpus = 4, max_cpus = 28, max_memory = 250 }
    },
    
    k80_8 = { gpu = "k80",
-	     { gpus = 1, max_cpus = 1, max_memory = 20 },
-	     { gpus = 2, max_cpus = 2, max_memory = 40 },
-	     { gpus = 3, max_cpus = 3, max_memory = 50 },
-	     { gpus = 4, max_cpus = 4, max_memory = 60 },
-	     { gpus = 5, max_cpus = 5, max_memory = 80 },
-	     { gpus = 6, max_cpus = 6, max_memory = 90 },
-	     { gpus = 7, max_cpus = 7, max_memory = 105 },
-	     { gpus = 8, max_cpus = 8, max_memory = 120 }
+	     { gpus = 1, max_cpus = 2, max_memory = 30 },
+	     { gpus = 2, max_cpus = 4, max_memory = 40 },
+	     { gpus = 3, max_cpus = 5, max_memory = 50 },
+	     { gpus = 4, max_cpus = 6, max_memory = 60 },
+	     { gpus = 5, max_cpus = 7, max_memory = 70 },
+	     { gpus = 6, max_cpus = 8, max_memory = 90 },
+	     { gpus = 7, max_cpus = 9, max_memory = 105 },
+	     { gpus = 8, max_cpus = 10, max_memory = 120 }
    },
    
    p1080_4 = { gpu = "p1080",
-	       { gpus = 1, max_cpus = 7,  max_memory = 50 },
+	       { gpus = 1, max_cpus = 10,  max_memory = 50 },
 	       { gpus = 2, max_cpus = 14, max_memory = 75 },
-	       { gpus = 3, max_cpus = 21, max_memory = 100 },
+	       { gpus = 3, max_cpus = 24, max_memory = 100 },
 	       { gpus = 4, max_cpus = 28, max_memory = 125 }
    },
    
    p40_4 = { gpu = "p40",
-	     { gpus = 1, max_cpus = 7,  max_memory = 100 },
+	     { gpus = 1, max_cpus = 10,  max_memory = 100 },
 	     { gpus = 2, max_cpus = 14, max_memory = 150 },
-	     { gpus = 3, max_cpus = 21, max_memory = 200 },
+	     { gpus = 3, max_cpus = 24, max_memory = 200 },
 	     { gpus = 4, max_cpus = 28, max_memory = 250 }
    },
 
    p100_4 = { gpu = "p100",
-	      { gpus = 1, max_cpus = 7,  max_memory = 100 },
+	      { gpus = 1, max_cpus = 10,  max_memory = 100 },
 	      { gpus = 2, max_cpus = 14, max_memory = 150 },
-	      { gpus = 3, max_cpus = 21, max_memory = 200 },
+	      { gpus = 3, max_cpus = 24, max_memory = 200 },
 	      { gpus = 4, max_cpus = 28, max_memory = 250 }
    },
    
    v100_sxm2_4 = { gpu = "v100",
-		   { gpus = 1, max_cpus = 5,  max_memory = 150 },
-		   { gpus = 2, max_cpus = 10, max_memory = 200 },
-		   { gpus = 3, max_cpus = 15, max_memory = 300 },
+		   { gpus = 1, max_cpus = 10,  max_memory = 250 },
+		   { gpus = 2, max_cpus = 14, max_memory = 300 },
+		   { gpus = 3, max_cpus = 18, max_memory = 350 },
 		   { gpus = 4, max_cpus = 20, max_memory = 375 }
    },
 
