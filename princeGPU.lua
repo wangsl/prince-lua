@@ -61,7 +61,7 @@ local partition_configures = {
    },
    
    v100_sxm2_4 = { gpu = "v100",
-		   { gpus = 1, max_cpus = 10,  max_memory = 250 },
+		   { gpus = 1, max_cpus = 10,  max_memory = 200 },
 		   { gpus = 2, max_cpus = 14, max_memory = 300 },
 		   { gpus = 3, max_cpus = 18, max_memory = 350 },
 		   { gpus = 4, max_cpus = 20, max_memory = 375 }
@@ -90,8 +90,10 @@ local partition_configures = {
 }
 
 local partitions = { "xwang_gpu", "mhealth",
-		     "k80_8", "k80_4", "p40_4", "p1080_4", "p100_4",
-		     "v100_sxm2_4", "v100_pci_2" }
+		     "p40_4", "p1080_4",
+		     "p100_4", "v100_pci_2",
+		     "k80_8", "k80_4",
+		     "v100_sxm2_4" }
 
 -- local partitions = { "xwang_gpu", "mhealth", "p40_4", "p1080_4", "p100_4" }
 

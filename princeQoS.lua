@@ -44,7 +44,7 @@ local qos_all = {
    cpuplus = {
       time_min = 0,
       time_max = seven_days,
-      users = { "rg187", "qhv200", "yz59", "ag4680" }
+      users = { "rg187" }
    },
 
    cpu365 = {
@@ -138,7 +138,8 @@ local function setup_parameters(args)
    gpu_job = args.gpu_job or false
 end
 
--- functions 
+-- functions
+
 princeQoS.setup_parameters = setup_parameters
 princeQoS.assign_qos = assign_qos
 princeQoS.qos_is_valid = qos_is_valid
