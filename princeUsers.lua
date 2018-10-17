@@ -17,6 +17,7 @@ users["1044"] = "teague"
 users["1045"] = "polunina"
 users["1048"] = "dedits"
 users["50202"] = "gencore"
+users["15000"] = "hpcadmin"
 
 local blocked_netids = princeStakeholders.blocked_netids
 

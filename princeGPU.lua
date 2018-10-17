@@ -17,7 +17,6 @@ local memory = 0
 local gpu_type = nil
 
 local available_gpu_types = { "k80", "p1080", "p100", "p40", "v100" }
---local available_gpu_types = { "p1080", "p100", "p40" }
 
 local partition_configures = {
    
@@ -61,14 +60,14 @@ local partition_configures = {
    },
    
    v100_sxm2_4 = { gpu = "v100",
-		   { gpus = 1, max_cpus = 10,  max_memory = 200 },
-		   { gpus = 2, max_cpus = 14, max_memory = 300 },
-		   { gpus = 3, max_cpus = 18, max_memory = 350 },
+		   { gpus = 1, max_cpus = 10,  max_memory = 150 },
+		   { gpus = 2, max_cpus = 14, max_memory = 250 },
+		   { gpus = 3, max_cpus = 18, max_memory = 300 },
 		   { gpus = 4, max_cpus = 20, max_memory = 375 }
    },
 
    v100_pci_2 = { gpu = "v100",
-	     { gpus = 1, max_cpus = 20,  max_memory = 100 },
+	     { gpus = 1, max_cpus = 10,  max_memory = 100 },
 	     --{ gpus = 2, max_cpus = 40, max_memory = 185 }
    },
 
@@ -90,12 +89,9 @@ local partition_configures = {
 }
 
 local partitions = { "xwang_gpu", "mhealth",
-		     "p40_4", "p1080_4",
-		     "p100_4", "v100_pci_2",
-		     "k80_8", "k80_4",
-		     "v100_sxm2_4" }
-
--- local partitions = { "xwang_gpu", "mhealth", "p40_4", "p1080_4", "p100_4" }
+		     "p40_4", "p1080_4", "p100_4",
+		     "v100_pci_2", "v100_sxm2_4",
+		     "k80_8", "k80_4" }
 
 local function gpu_type_is_valid(gpu_type)
    if gpu_type == nil then return true end
@@ -154,6 +150,15 @@ end
 local function gpu_type_from_gres_is_valid(gres)
    local gpu_type, _ = gres_for_gpu(gres)
    return gpu_type_is_valid(gpu_type)
+end
+
+local function number_of_cpus_is_ge_than_number_of_gpus()
+   if cpus >= gpus then
+      return true
+   else
+      user_log("GPU number %d is bigger than CPU number %d", gpus, cpus)
+      return false
+   end
 end
 
 local function fit_into_partition(part_name)
@@ -220,6 +225,7 @@ end
 
 princeGPU.gres_for_gpu = gres_for_gpu
 princeGPU.gpu_type_from_gres_is_valid = gpu_type_from_gres_is_valid
+princeGPU.number_of_cpus_is_ge_than_number_of_gpus = number_of_cpus_is_ge_than_number_of_gpus
 
 princeGPU.setup_parameters = setup_parameters
 princeGPU.assign_partitions = assign_partitions

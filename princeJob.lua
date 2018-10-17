@@ -224,6 +224,7 @@ local function compute_resources_are_valid()
 
    -- check partitions
    if gpu_job then
+      if not princeGPU.number_of_cpus_is_ge_than_number_of_gpus() then return false end
       if not job_with_multiple_gpu_cards_is_ok() then return false end
       if not princeGPU.partitions_are_valid(job_desc.partition) then return false end
       
@@ -305,3 +306,4 @@ princeJob.setup_routings = setup_routings
 slurm_log("To load princeJob.lua")
 
 return princeJob
+

@@ -14,7 +14,7 @@ local function job_submission(job_desc, part_list, submit_uid)
 
    -- for HPC maintainance
    if princeUtils.maintenance_mode and submit_uid > 1050 then
-      if submit_uid ~= 1296493 and submit_uid ~= 2761180 and submit_uid ~= 3000823 then
+      if submit_uid ~= 1296493 and submit_uid ~= 2761180 and submit_uid ~= 3000823 and submit_uid ~= 15000 then
 	 user_log("Prince is in maintenance now, job submission is disabled")
 	 return slurm.ERROR
       end
