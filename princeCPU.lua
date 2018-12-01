@@ -73,15 +73,28 @@ local partition_groups = {
 		    min_ave_memory = 0, max_ave_memory = 6
    },
 
+   group_c42 = { partitions = "c42",
+		 min_cpus = 1, max_cpus = 40, max_nodes = 4,
+		 min_memory = 0, max_memory = 187.5,
+		 min_ave_memory = 0, max_ave_memory = 20
+   },
+   
    xwang =  { partitions = "xwang_cpu",
-	      min_cpus = 1, max_cpus = 112, max_nodes = 4,
+	      min_cpus = 1, max_cpus = 28, max_nodes = 4,
 	      min_memory = 0, max_memory = 250,
 	      min_ave_memory = 0, max_ave_memory = 250,
 	      users = princeStakeholders.cns_wang_users 
+   },
+   
+   kussel =  { partitions = "kussel_cpu",
+	       min_cpus = 1, max_cpus = 40, max_nodes = 4,
+	       min_memory = 0, max_memory = 187.5,
+	       min_ave_memory = 0, max_ave_memory = 187.5,
+	       users = princeStakeholders.kussel_users
    }
 }
 
-local partition_group_names = { "xwang",
+local partition_group_names = { "xwang", "kussel",
 				"group_c32_38",
 				"group_c32_41",
 				"group_c39_41",
@@ -89,6 +102,7 @@ local partition_group_names = { "xwang",
 				"group_28_125",
 				"group_28",
 				"group_28_250",
+				"group_c42",
 				"group_bigmem"
 }
 

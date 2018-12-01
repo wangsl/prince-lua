@@ -15,6 +15,8 @@ local mhealth_users = { "apd283", "kz918", "nn1119", "sb6065",
 			"ns3807", "as10656", "pa1303",
 			"cm4698", "ic1018",  "jz2575", "gc2300" }
 
+local kussell_users = { "elk2", "ml3365", "tn49", "as8805", "shg325", "wang" }
+
 local users_with_unlimited_wall_time = { "sw77" }
 
 local test_users = { "wang", "sw77", "deng", "wd35" }
@@ -36,6 +38,5 @@ princeStakeholders.special_gpu_users = special_gpu_users
 slurm_log("To load princeStakeholders.lua")
 
 return princeStakeholders
-
 
 
