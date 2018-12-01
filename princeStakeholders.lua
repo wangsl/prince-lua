@@ -15,7 +15,7 @@ local mhealth_users = { "apd283", "kz918", "nn1119", "sb6065",
 			"ns3807", "as10656", "pa1303",
 			"cm4698", "ic1018",  "jz2575", "gc2300" }
 
-local kussell_users = { "elk2", "ml3365", "tn49", "as8805", "shg325", "wang" }
+local kussell_users = { "elk2", "ml3365", "tn49", "as8805", "shg325" }
 
 local users_with_unlimited_wall_time = { "sw77" }
 
@@ -30,6 +30,7 @@ local blocked_netids = { }
 
 princeStakeholders.cns_wang_users = cns_wang_users
 princeStakeholders.mhealth_users = mhealth_users
+princeStakeholders.kussell_users = kussell_users
 princeStakeholders.test_users = test_users
 princeStakeholders.users_with_unlimited_wall_time = users_with_unlimited_wall_time
 princeStakeholders.blocked_netids = blocked_netids

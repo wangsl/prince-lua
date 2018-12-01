@@ -86,15 +86,15 @@ local partition_groups = {
 	      users = princeStakeholders.cns_wang_users 
    },
    
-   kussel =  { partitions = "kussel_cpu",
+   kussell =  { partitions = "kussel_cpu",
 	       min_cpus = 1, max_cpus = 40, max_nodes = 4,
 	       min_memory = 0, max_memory = 187.5,
 	       min_ave_memory = 0, max_ave_memory = 187.5,
-	       users = princeStakeholders.kussel_users
+	       users = princeStakeholders.kussell_users
    }
 }
 
-local partition_group_names = { "xwang", "kussel",
+local partition_group_names = { "xwang", "kussell",
 				"group_c32_38",
 				"group_c32_41",
 				"group_c39_41",
