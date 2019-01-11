@@ -44,7 +44,7 @@ local qos_all = {
    cpuplus = {
       time_min = 0,
       time_max = seven_days,
-      users = { "rg187", "qhv200", "yz59" }
+      users = { "rg187", "msm659" }
    },
 
    cpu365 = {
@@ -56,7 +56,7 @@ local qos_all = {
    gpuplus = {
       time_min = 0,
       time_max = seven_days,
-      users = { "wang", "vg44" } 
+      users = { "wang", "vg44", "sj2233" } 
    },
 
    knl = {

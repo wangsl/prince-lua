@@ -9,6 +9,7 @@ local slurm_log = princeUtils.slurm_log
 local user_log = princeUtils.user_log
 
 local users = { }
+users["0"] = "root"
 users["1015"] = "wang"
 users["1032"] = "stratos"
 users["1041"] = "deng"

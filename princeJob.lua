@@ -169,10 +169,10 @@ local function assign_partitions()
 
    if job_desc.partition ~= nil then
       local n_match = nil
-      specified_partitions, n_match = string.gsub(job_desc.partition, ",...$", "")
+      specified_partitions, n_match = string.gsub(job_desc.partition, ",%.%.%.$", "")
       if n_match == 1 then to_append = true end
    end
-
+   
    if job_desc.partition == nil or to_append then
       local partitions = nil
       if gpu_job then
@@ -180,7 +180,7 @@ local function assign_partitions()
       else
 	 partitions = assign_cpu_partitions()
       end
-
+      
       if to_append and partitions ~= nil then
 	 partitions = specified_partitions .. "," .. partitions
       end
