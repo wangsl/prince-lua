@@ -99,11 +99,55 @@ local function check_reservation_morari_is_OK()
    return true
 end
 
+local function check_reservation_jupyter_is_OK()
+   local res_name = "jupyter"
+   slurm_log("Reservation: %s", res_name)
+   
+   if job_desc.reservation ~= res_name then return false end
+
+   --[[
+   if job_desc.min_nodes ~= uint32_NO_VAL then
+      if job_desc.min_nodes ~= 1 then
+	 user_log("Reservation jupyter: please specify: --nodes=1")
+	 return false
+      end
+   end
+   --]]
+   
+   if job_desc.time_limit > 240 then
+      user_log("Reservation jupyter: time limit 4 hours")
+      return false
+   end
+   
+   if memory_is_specified(job_desc.pn_min_memory) and job_desc.pn_min_memory > 3*1024 then
+      user_log("Reservation jupyter: maximum memory for CPU only job is 3GB")
+      return false
+   end
+   
+   if job_desc.cpus_per_task ~= uint16_NO_VAL then
+      if job_desc.cpus_per_task ~= 1 then
+	 user_log("Reservation jupyter: --cpus-per-task=1")
+	 return false
+      end
+   end
+      
+   if job_desc.partition ~= nil then
+      if job_desc.partition ~= "c31" then
+	 user_log("Reservation jupyter: --partition=c31")
+	 return false
+      end
+   end
+
+   return true
+end
+
 local function check_reservation_is_OK(job_desc_)
    job_desc = job_desc_
 
    -- if job_desc.reservation == "morari" then return check_reservation_morari_is_OK() end
 
+   if job_desc.reservation == "jupyter" then return check_reservation_jupyter_is_OK() end
+   
    return true
 end
 
