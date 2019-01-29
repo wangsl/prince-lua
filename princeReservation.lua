@@ -105,14 +105,12 @@ local function check_reservation_jupyter_is_OK()
    
    if job_desc.reservation ~= res_name then return false end
 
-   --[[
    if job_desc.min_nodes ~= uint32_NO_VAL then
       if job_desc.min_nodes ~= 1 then
 	 user_log("Reservation jupyter: please specify: --nodes=1")
 	 return false
       end
    end
-   --]]
    
    if job_desc.time_limit > 240 then
       user_log("Reservation jupyter: time limit 4 hours")
