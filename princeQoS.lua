@@ -56,7 +56,7 @@ local qos_all = {
    gpuplus = {
       time_min = 0,
       time_max = seven_days,
-      users = { "wang", "vg44", "sj2233" } 
+      users = { "wang" } 
    },
 
    knl = {
