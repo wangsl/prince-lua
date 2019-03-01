@@ -50,7 +50,7 @@ local partition_groups = {
    },
 
    group_knl = { partitions = "knl",
-		 min_cpus = 1, max_cpus = 256, max_nodes = 1,
+		 min_cpus = 1, max_cpus = 64, max_nodes = 1,
 		 min_memory = 0, max_memory = 186,
 		 min_ave_memory = 0, max_ave_memory = 186
    },

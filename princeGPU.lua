@@ -80,9 +80,9 @@ local partition_configures = {
    },
 
    xwang_gpu = { gpu = "p40",
-	     { gpus = 1, max_cpus = 7,  max_memory = 100 },
+	     { gpus = 1, max_cpus = 10,  max_memory = 100 },
 	     { gpus = 2, max_cpus = 14, max_memory = 150 },
-	     { gpus = 3, max_cpus = 21, max_memory = 200 },
+	     { gpus = 3, max_cpus = 24, max_memory = 200 },
 	     { gpus = 4, max_cpus = 28, max_memory = 250 },
 	     users = princeStakeholders.cns_wang_users 
    },
