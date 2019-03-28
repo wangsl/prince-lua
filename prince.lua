@@ -57,4 +57,3 @@ slurm_log("To load prince.lua")
 return prince
 
 
-

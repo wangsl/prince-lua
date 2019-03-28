@@ -228,7 +228,7 @@ local function compute_resources_are_valid()
       if not job_with_multiple_gpu_cards_is_ok() then return false end
       if not princeGPU.partitions_are_valid(job_desc.partition) then return false end
       
-      if job_desc.shared ~= uint16_NO_VAL then
+      if job_desc.reservation == nil and job_desc.shared ~= uint16_NO_VAL then
 	 user_log("exclusive use GPU node is disabled on prince cluster")
 	 return false
       end

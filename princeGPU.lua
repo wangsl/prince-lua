@@ -21,7 +21,7 @@ local available_gpu_types = { "k80", "p1080", "p100", "p40", "v100" }
 local partition_configures = {
    
    k80_4 = { gpu = "k80",
-	     { gpus = 1, max_cpus = 10,  max_memory = 100 },
+	     { gpus = 1, max_cpus = 12,  max_memory = 100 },
 	     { gpus = 2, max_cpus = 14, max_memory = 150 },
 	     { gpus = 3, max_cpus = 24, max_memory = 200 },
 	     { gpus = 4, max_cpus = 28, max_memory = 250 }
@@ -39,28 +39,28 @@ local partition_configures = {
    },
    
    p1080_4 = { gpu = "p1080",
-	       { gpus = 1, max_cpus = 10,  max_memory = 50 },
+	       { gpus = 1, max_cpus = 12,  max_memory = 50 },
 	       { gpus = 2, max_cpus = 14, max_memory = 75 },
 	       { gpus = 3, max_cpus = 24, max_memory = 100 },
 	       { gpus = 4, max_cpus = 28, max_memory = 125 }
    },
    
    p40_4 = { gpu = "p40",
-	     { gpus = 1, max_cpus = 10,  max_memory = 100 },
+	     { gpus = 1, max_cpus = 12,  max_memory = 100 },
 	     { gpus = 2, max_cpus = 14, max_memory = 150 },
 	     { gpus = 3, max_cpus = 24, max_memory = 200 },
 	     { gpus = 4, max_cpus = 28, max_memory = 250 }
    },
 
    p100_4 = { gpu = "p100",
-	      { gpus = 1, max_cpus = 10,  max_memory = 100 },
+	      { gpus = 1, max_cpus = 12,  max_memory = 100 },
 	      { gpus = 2, max_cpus = 14, max_memory = 150 },
 	      { gpus = 3, max_cpus = 24, max_memory = 200 },
 	      { gpus = 4, max_cpus = 28, max_memory = 250 }
    },
    
    v100_sxm2_4 = { gpu = "v100",
-		   { gpus = 1, max_cpus = 10,  max_memory = 150 },
+		   { gpus = 1, max_cpus = 12,  max_memory = 150 },
 		   { gpus = 2, max_cpus = 14, max_memory = 250 },
 		   { gpus = 3, max_cpus = 18, max_memory = 300 },
 		   { gpus = 4, max_cpus = 20, max_memory = 375 }
@@ -72,7 +72,7 @@ local partition_configures = {
    },
 
    mhealth = { gpu = "p1080",
-	       { gpus = 1, max_cpus = 7,  max_memory = 50 },
+	       { gpus = 1, max_cpus = 12,  max_memory = 50 },
 	       { gpus = 2, max_cpus = 14, max_memory = 75 },
 	       { gpus = 3, max_cpus = 21, max_memory = 100 },
 	       { gpus = 4, max_cpus = 28, max_memory = 125 },
@@ -80,7 +80,7 @@ local partition_configures = {
    },
 
    xwang_gpu = { gpu = "p40",
-	     { gpus = 1, max_cpus = 10,  max_memory = 100 },
+	     { gpus = 1, max_cpus = 12,  max_memory = 100 },
 	     { gpus = 2, max_cpus = 14, max_memory = 150 },
 	     { gpus = 3, max_cpus = 24, max_memory = 200 },
 	     { gpus = 4, max_cpus = 28, max_memory = 250 },
