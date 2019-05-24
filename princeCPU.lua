@@ -180,9 +180,11 @@ local function partitions_are_valid(partitions)
    end
    if not extra_checks_are_valid() then return false end
 
-   if cpus == 28 and memory <= 125 and partitions ~= "c01_17" then
-      user_log("For jobs with 28 CPU cores and <= 125GB memory, please use c01_17 partition only")
-      return false
+   if princeUsers.nyu_netid() ~= "wang" or princeUsers.nyu_netid() ~= "ll1488" then
+      if cpus == 28 and memory <= 125 and partitions ~= "c01_17" then
+	 user_log("For jobs with 28 CPU cores and <= 125GB memory, please use c01_17 partition only")
+	 return false
+      end
    end
    
    return true
