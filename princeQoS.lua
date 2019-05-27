@@ -68,7 +68,7 @@ local qos_all = {
    sysadm = {
       time_min = 0,
       time_max = seven_days,
-      users = { "wang" }
+      users = { "wang", "hpcadmin" }
    }
 }
 
