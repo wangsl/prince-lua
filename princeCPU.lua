@@ -91,6 +91,12 @@ local partition_groups = {
 	       min_memory = 0, max_memory = 187.5,
 	       min_ave_memory = 0, max_ave_memory = 187.5,
 	       users = princeStakeholders.kussell_users
+   },
+
+   jupyterhub =  { partitions = "jupyterhub_cpu",
+		   min_cpus = 1, max_cpus = 4, max_nodes = 1,
+		   min_memory = 0, max_memory = 4,
+		   min_ave_memory = 0, max_ave_memory = 4
    }
 }
 
