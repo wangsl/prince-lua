@@ -8,7 +8,8 @@ local princeUsers = require "princeUsers"
 local slurm_log = princeUtils.slurm_log
 local user_log = princeUtils.user_log
 
-local bigIntNumber = 10240*slurm.NO_VAL
+-- local bigIntNumber = 10240*slurm.NO_VAL
+local bigIntNumber = princeUtils.bigIntNumber
 
 local function memory_is_specified(mem)
    if mem == nil or mem > bigIntNumber then
@@ -104,15 +105,13 @@ local function check_reservation_jupyter_cpu_is_OK()
    slurm_log("Reservation: %s", res_name)
    
    if job_desc.reservation ~= res_name then return false end
-
-   if job_desc.min_nodes ~= uint32_NO_VAL then
-      if job_desc.min_nodes ~= 1 then
-	 user_log("Reservation jupyter_cpu: please specify: --nodes=1")
-	 return false
-      end
+   
+   if job_desc.min_nodes ~= princeUtils.uint32_NO_VAL and job_desc.min_nodes ~= 1 then
+      user_log("Reservation jupyter_cpu: please specify: --nodes=1")
+      return false
    end
    
-   if job_desc.time_limit > 240 then
+   if job_desc.time_limit ~= princeUtils.uint32_NO_VAL and job_desc.time_limit > 240 then
       user_log("Reservation jupyter_cpu: time limit 4 hours")
       return false
    end
@@ -122,18 +121,14 @@ local function check_reservation_jupyter_cpu_is_OK()
       return false
    end
    
-   if job_desc.cpus_per_task ~= uint16_NO_VAL then
-      if job_desc.cpus_per_task > 4 then
-	 user_log("Reservation jupyter_cpu: --cpus-per-task=4")
-	 return false
-      end
+   if job_desc.cpus_per_task ~= princeUtils.uint16_NO_VAL and job_desc.cpus_per_task > 4 then
+      user_log("Reservation jupyter_cpu: --cpus-per-task=4")
+      return false
    end
       
-   if job_desc.partition ~= nil then
-      if job_desc.partition ~= "jupyterhub_cpu" then
-	 user_log("Reservation jupyter_cpu: --partition=jupyterhub_cpu")
-	 return false
-      end
+   if job_desc.partition ~= nil and job_desc.partition ~= "jupyterhub_cpu" then
+      user_log("Reservation jupyter_cpu: --partition=jupyterhub_cpu")
+      return false
    end
 
    return true

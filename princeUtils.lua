@@ -2,6 +2,12 @@
 
 local princeUtils = { }
 
+local uint16_NO_VAL = slurm.NO_VAL16 
+local uint32_NO_VAL = slurm.NO_VAL
+local uint64_NO_VAL = slurm.NO_VAL64
+
+local bigIntNumber = 10240*slurm.NO_VAL
+
 local two_days = 2880 -- in mins
 local seven_days = 10080 -- in mins
 local unlimited_time = 525600 -- one year in mins
@@ -55,6 +61,11 @@ princeUtils.mins_to_days = mins_to_days
 princeUtils.two_days = two_days
 princeUtils.seven_days = seven_days
 princeUtils.unlimited_time = unlimited_time
+
+princeUtils.uint16_NO_VAL = uint16_NO_VAL
+princeUtils.uint32_NO_VAL = uint32_NO_VAL
+princeUtils.uint64_NO_VAL = uint64_NO_VAL
+princeUtils.bigIntNumber = bigIntNumber
 
 -- princeUtils.slurm_log = slurm_log
 -- princeUtils.user_log = slurm_log

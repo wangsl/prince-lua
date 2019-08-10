@@ -17,11 +17,16 @@ local user_log = princeUtils.user_log
 
 -- constants
 
-local uint16_NO_VAL = slurm.NO_VAL16 
-local uint32_NO_VAL = slurm.NO_VAL 
-local uint64_NO_VAL = slurm.NO_VAL64
+-- local uint16_NO_VAL = slurm.NO_VAL16 
+-- local uint32_NO_VAL = slurm.NO_VAL 
+-- local uint64_NO_VAL = slurm.NO_VAL64
+-- local bigIntNumber = 10240*slurm.NO_VAL
 
-local bigIntNumber = 10240*slurm.NO_VAL
+local uint16_NO_VAL = princeUtils.uint16_NO_VAL
+local uint32_NO_VAL = princeUtils.uint32_NO_VAL
+local uint64_NO_VAL = princeUtils.uint64_NO_VAL
+
+local bigIntNumber = princeUtils.bigIntNumber
 
 local job_desc = nil
 
