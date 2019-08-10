@@ -1,7 +1,6 @@
 #!/bin/env lua
 
 --[[
-   
    Example lua script demonstrating the SLURM job_submit/lua interface.
    This is only an example, not meant for use in its current form.
    
@@ -37,6 +36,4 @@ end
 slurm.log_info("**** SLURM Lua plugin initialized with Lua version %s ****", _VERSION)
 
 return slurm.SUCCESS
-
-
 

@@ -97,6 +97,13 @@ local partition_groups = {
 		   min_cpus = 1, max_cpus = 4, max_nodes = 1,
 		   min_memory = 0, max_memory = 4,
 		   min_ave_memory = 0, max_ave_memory = 4
+   },
+
+   -- v100_sxm2_4
+   gpu_partitions = { partitions = "k80_4,p40_4,p100_4,v100_pci_2,k80_8",
+		      min_cpus = 1, max_cpus = 2, max_nodes = 1,
+		      min_memory = 0, max_memory = 40,
+		      min_ave_memory = 0, max_ave_memory = 10
    }
 }
 
@@ -109,7 +116,8 @@ local partition_group_names = { "xwang", "kussell",
 				"group_28",
 				"group_28_250",
 				"group_c42",
-				"group_bigmem"
+				"group_bigmem",
+				"gpu_partitions",
 }
 
 local function setup_partition_to_partition_group()
