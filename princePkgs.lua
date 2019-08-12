@@ -53,6 +53,8 @@ local function unload_new_updated_packages()
    end
 end
 
+-- functions
+
 princePkgs.unload_new_updated_packages = unload_new_updated_packages
 
 slurm_log("To load princePkgs.lua")

@@ -8,6 +8,8 @@ local uint64_NO_VAL = slurm.NO_VAL64
 
 local bigIntNumber = 10240*slurm.NO_VAL
 
+local six_hours = 360 -- six hours in mins
+local twelve_hours = 720 -- 12 hours in mins
 local two_days = 2880 -- in mins
 local seven_days = 10080 -- in mins
 local unlimited_time = 525600 -- one year in mins
@@ -58,6 +60,8 @@ princeUtils.mins_to_days = mins_to_days
 
 -- data
 
+princeUtils.six_hours = six_hours
+princeUtils.twelve_hours  = twelve_hours
 princeUtils.two_days = two_days
 princeUtils.seven_days = seven_days
 princeUtils.unlimited_time = unlimited_time

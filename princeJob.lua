@@ -282,7 +282,8 @@ local function setup_routings()
    if not gpu_job then
       princeCPU.setup_parameters{cpus = n_cpus_per_node,
 				 memory = job_desc.pn_min_memory,
-				 nodes = job_desc.min_nodes }
+				 nodes = job_desc.min_nodes,
+				 time_limit = job_desc.time_limit }
       
    end
    
@@ -311,4 +312,5 @@ princeJob.setup_routings = setup_routings
 slurm_log("To load princeJob.lua")
 
 return princeJob
+
 

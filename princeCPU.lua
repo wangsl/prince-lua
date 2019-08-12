@@ -12,6 +12,7 @@ local user_log = princeUtils.user_log
 local cpus = 0
 local memory = 0
 local nodes = 0
+local time_limit = princeUtils.unlimited_time
 
 local ave_memory = nil
 
@@ -101,9 +102,10 @@ local partition_groups = {
 
    -- v100_sxm2_4
    gpu_partitions = { partitions = "k80_4,p40_4,p100_4,v100_pci_2,k80_8",
-		      min_cpus = 1, max_cpus = 2, max_nodes = 1,
-		      min_memory = 0, max_memory = 40,
-		      min_ave_memory = 0, max_ave_memory = 10
+		      min_cpus = 1, max_cpus = 4, max_nodes = 1,
+		      min_memory = 0, max_memory = 60,
+		      min_ave_memory = 0, max_ave_memory = 60,
+		      time_limit = princeUtils.six_hours
    }
 }
 
@@ -137,6 +139,11 @@ local function fit_into_partition_group(group_name)
       if group.users ~= nil and not princeUtils.in_table(group.users, princeUsers.nyu_netid()) then
 	 return false
       end
+
+      if group.time_limit ~= nil and time_limit > group.time_limit then
+	 return false
+      end
+      
       if nodes <= group.max_nodes and
 	 group.min_cpus <= cpus and cpus <= group.max_cpus and
 	 group.min_memory <= memory and memory <= group.max_memory and
@@ -208,7 +215,8 @@ local function setup_parameters(args)
    cpus = args.cpus or 1
    memory = args.memory/1024 or 2 -- in GB only
    nodes = args.nodes or 1
-   
+   time_limit = args.time_limit or 60 -- 1 hour
+
    ave_memory = memory/cpus
 end
 
