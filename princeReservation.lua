@@ -138,8 +138,6 @@ local function check_reservation_chung_is_OK()
    local res_name = "chung"
    slurm_log("Reservation: %s", res_name)
 
-   -- if princeUsers.nyu_netid() ~= "wang" then return true end
-   
    if job_desc.reservation ~= res_name then return false end
    
    if job_desc.min_nodes ~= uint32_NO_VAL then
@@ -190,7 +188,7 @@ local function check_reservation_is_OK(job_desc_)
 
    if job_desc.reservation == "jupyter_cpu" then return check_reservation_jupyter_cpu_is_OK() end
 
-   -- if job_desc.reservation == "chung" then return check_reservation_chung_is_OK() end
+   if job_desc.reservation == "chung" then return check_reservation_chung_is_OK() end
    
    return true
 end

@@ -14,11 +14,15 @@ local two_days = 2880 -- in mins
 local seven_days = 10080 -- in mins
 local unlimited_time = 525600 -- one year in mins
 
---local maintenance_mode = true
+-- local maintenance_mode = true
 local maintenance_mode = false
 
 local function mins_to_days(mins)
    return mins/60/24
+end
+
+local function hours_to_mins(h)
+   return h*60
 end
 
 local function split(s, delimiter)
@@ -57,6 +61,7 @@ princeUtils.insert_to_table_if_not_exist = insert_to_table_if_not_exist
 princeUtils.is_empty = is_empty
 
 princeUtils.mins_to_days = mins_to_days
+princeUtils.hours_to_mins = hours_to_mins
 
 -- data
 

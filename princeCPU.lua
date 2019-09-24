@@ -105,7 +105,7 @@ local partition_groups = {
 		      min_cpus = 1, max_cpus = 4, max_nodes = 1,
 		      min_memory = 0, max_memory = 60,
 		      min_ave_memory = 0, max_ave_memory = 60,
-		      time_limit = princeUtils.six_hours
+		      time_limit = princeUtils.hours_to_mins(12)
    }
 }
 
@@ -201,7 +201,7 @@ local function partitions_are_valid(partitions)
    end
    if not extra_checks_are_valid() then return false end
 
-   if princeUsers.nyu_netid() ~= "wang" or princeUsers.nyu_netid() ~= "hpcadmin" then
+   if princeUsers.nyu_netid() ~= "wang" and princeUsers.nyu_netid() ~= "hpcadmin" then
       if cpus == 28 and memory <= 125 and partitions ~= "c01_17" then
 	 user_log("For jobs with 28 CPU cores and <= 125GB memory, please use c01_17 partition only")
 	 return false

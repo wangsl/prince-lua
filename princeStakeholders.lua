@@ -24,7 +24,7 @@ local test_users = { "wang", "sw77", "deng", "wd35" }
 -- users to request more than 1 GPU node per job
 local special_gpu_users = { "wang", "kp1732" }
 
-local blocked_netids = { }
+local blocked_netids = { "jrc63" }
 
 -- data
 
