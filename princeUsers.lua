@@ -19,6 +19,7 @@ users["1044"] = "teague"
 users["1048"] = "dedits"
 users["50202"] = "gencore"
 users["51202"] = "cbi"
+users["51207"] = "lgs"
 users["51203"] = "smappx"
 users["15000"] = "hpcadmin"
 
