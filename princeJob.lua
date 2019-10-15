@@ -143,6 +143,7 @@ local function set_default_compute_resources()
    
    if job_desc.min_nodes == uint32_NO_VAL then job_desc.min_nodes = 1 end
 
+   
    if not memory_is_specified(job_desc.pn_min_memory) then
       if memory_is_specified(job_desc.min_mem_per_cpu) then
 	 job_desc.pn_min_memory = job_desc.min_mem_per_cpu
@@ -226,6 +227,13 @@ end
 local function compute_resources_are_valid()
    -- check QoS
    if not princeQoS.qos_is_valid(job_desc.qos) then return false end
+
+   -- check request 0 memory
+
+   if job_desc.pn_min_memory ~= nil and job_desc.pn_min_memory == 0 then
+      user_log("please request nonzero amount of memory, such as --mem=1GB")
+      return false
+   end
 
    -- check partitions
    if gpu_job then
