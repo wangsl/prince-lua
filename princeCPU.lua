@@ -74,8 +74,14 @@ local partition_groups = {
 		    min_ave_memory = 0, max_ave_memory = 6
    },
 
-   group_c42 = { partitions = "c42,c43_45",
-		 min_cpus = 1, max_cpus = 40, max_nodes = 1,
+   group_c42 = { partitions = "c42",
+		 min_cpus = 1, max_cpus = 40, max_nodes = 4,
+		 min_memory = 0, max_memory = 187.5,
+		 min_ave_memory = 0, max_ave_memory = 20
+   },
+
+   group_c43_45 = { partitions = "c43_45",
+		 min_cpus = 1, max_cpus = 40, max_nodes = 8,
 		 min_memory = 0, max_memory = 187.5,
 		 min_ave_memory = 0, max_ave_memory = 20
    },
@@ -88,7 +94,7 @@ local partition_groups = {
    },
    
    xwang_cascade = { partitions = "xwang_cpu_cascade",
-		     min_cpus = 1, max_cpus = 40, max_nodes = 1,
+		     min_cpus = 1, max_cpus = 40, max_nodes = 4,
 		     min_memory = 0, max_memory = 187.5,
 		     min_ave_memory = 0, max_ave_memory = 20,
 		     users = princeStakeholders.cns_wang_users
@@ -115,7 +121,8 @@ local partition_groups = {
    }
 }
 
-local partition_group_names = { "xwang_cascade", "xwang",
+local partition_group_names = { "xwang_cascade",
+				"xwang",
 				"kussell",
 				"group_c32_38",
 				"group_c32_41",
@@ -125,6 +132,7 @@ local partition_group_names = { "xwang_cascade", "xwang",
 				"group_28",
 				"group_28_250",
 				"group_c42",
+				"group_c43_45",
 				"group_bigmem",
 				"gpu_partitions",
 }
