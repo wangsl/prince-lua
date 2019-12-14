@@ -147,8 +147,8 @@ local function check_reservation_chung_is_OK()
       end
    end
    
-   if job_desc.time_limit > 60 then
-      user_log("Reservation chung: time limit 60 mins")
+   if job_desc.time_limit > 240 then
+      user_log("Reservation chung: time limit 240 mins")
       return false
    end
 
@@ -173,11 +173,64 @@ local function check_reservation_chung_is_OK()
    
    if job_desc.cpus_per_task ~= uint16_NO_VAL then
       if job_desc.cpus_per_task ~= 28 then
-	 user_log("Reservation morari: --cpus-per-task=28")
+	 user_log("Reservation chung: --cpus-per-task=28")
 	 return false
       end
    end
    
+   return true
+end
+
+local function check_reservation_zhang_is_OK()
+   local res_name = "zhang"
+   slurm_log("Reservation: %s", res_name)
+
+   if job_desc.reservation ~= res_name then return false end
+   
+   if job_desc.min_nodes ~= uint32_NO_VAL then
+      if job_desc.min_nodes ~= 1 then
+	 user_log("Reservation zhang: please specify: --nodes=1")
+	 return false
+      end
+   end
+
+   --[[
+   if job_desc.time_limit > 240 then
+      user_log("Reservation zhang: time limit 240 mins")
+      return false
+   end
+   --]]
+   --[[
+   if job_desc.shared ~= 0 then
+      user_log("Reservation: please specify: --exclusive")
+      return false
+   end
+   --]]
+   
+   if job_desc.gres == nil then return false end
+   
+   if job_desc.gres ~= "gpu:k80:8" then
+      user_log("Reservation zhang: --gres=gpu:k80:8")
+      return false
+   end
+   
+   if memory_is_specified(job_desc.pn_min_memory) and job_desc.pn_min_memory ~= 120*1024 then
+      user_log("Reservation zhang: --mem=120GB")
+      return false
+   end
+   
+   if job_desc.cpus_per_task ~= uint16_NO_VAL then
+      if job_desc.cpus_per_task ~= 10 then
+	 user_log("Reservation zhang: --cpus-per-task=10")
+	 return false
+      end
+   end
+   
+   if job_desc.partition ~= nil and job_desc.partition ~= "k80_8" then
+      user_log("Reservation zhang: --partition=k80_8")
+      return false
+   end
+
    return true
 end
 
@@ -189,6 +242,8 @@ local function check_reservation_is_OK(job_desc_)
    if job_desc.reservation == "jupyter_cpu" then return check_reservation_jupyter_cpu_is_OK() end
 
    if job_desc.reservation == "chung" then return check_reservation_chung_is_OK() end
+
+   if job_desc.reservation == "zhang" then return check_reservation_zhang_is_OK() end
    
    return true
 end
