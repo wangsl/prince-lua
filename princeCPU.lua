@@ -113,11 +113,11 @@ local partition_groups = {
 		   min_ave_memory = 0, max_ave_memory = 4
    },
 
-   gpu_partitions = { partitions = "k80_4,p40_4,p100_4,v100_pci_2,k80_8,v100_sxm2_4",
+   gpu_partitions = { partitions = "k80_4,p40_4,p100_4,v100_pci_2,k80_8,v100_sxm2_4,v100_sxm2_4_2,dgx1",
 		      min_cpus = 1, max_cpus = 4, max_nodes = 1,
 		      min_memory = 0, max_memory = 60,
 		      min_ave_memory = 0, max_ave_memory = 60,
-		      time_limit = princeUtils.hours_to_mins(6)
+		      time_limit = princeUtils.hours_to_mins(5)
    }
 }
 

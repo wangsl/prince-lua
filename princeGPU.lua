@@ -15,7 +15,7 @@ local gpus = 0
 local cpus = 0
 local memory = 0
 local gpu_type = nil
-local wall_time = 0
+local time_limit = 0
 
 local available_gpu_types = { "k80", "p1080", "p100", "p40", "v100" }
 
@@ -88,7 +88,7 @@ local partition_configures = {
 		     { gpus = 2, max_cpus = 20, max_memory = 325 },
 		     { gpus = 3, max_cpus = 36, max_memory = 350 },
 		     { gpus = 4, max_cpus = 40, max_memory = 375 },
-		     max_time = princeUtils.hours_to_mins(12)
+		     time_limit = princeUtils.hours_to_mins(12)
    },
 
    mhealth = { gpu = "p1080",
@@ -198,7 +198,7 @@ local function fit_into_partition(part_name)
 	    return false
       end
 
-      if partition_conf.max_time ~= nil and wall_time > partition_conf.max_time then
+      if partition_conf.time_limit ~= nil and time_limit > partition_conf.time_limit then
 	 return false
       end
       
@@ -252,8 +252,8 @@ local function setup_parameters(args)
    cpus = args.cpus or 1
    memory = args.memory/1024 or 2 -- in GB
    gpu_type = args.gpu_type or nil
-   wall_time = args.wall_time
-   -- slurm_log("wall_time: %d", wall_time)
+   time_limit = args.time_limit
+   -- slurm_log("**** time_limit: %d", time_limit)
 end
 
 -- exported functions

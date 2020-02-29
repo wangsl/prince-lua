@@ -116,7 +116,7 @@ local function setup_gpu_job()
       n_gpus_per_node = gpus
       princeGPU.setup_parameters{ gpus = gpus, cpus = n_cpus_per_node,
 				  memory = job_desc.pn_min_memory,
-				  wall_time = job_desc.time_limit,
+				  time_limit = job_desc.time_limit,
 				  gpu_type = gpu_type }
       
       if job_desc.bitflags == 0 then job_desc.bitflags = slurm.GRES_ENFORCE_BIND end
