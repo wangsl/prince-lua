@@ -15,6 +15,7 @@ local gpus = 0
 local cpus = 0
 local memory = 0
 local gpu_type = nil
+local wall_time = 0
 
 local available_gpu_types = { "k80", "p1080", "p100", "p40", "v100" }
 
@@ -60,15 +61,34 @@ local partition_configures = {
    },
    
    v100_sxm2_4 = { gpu = "v100",
-		   { gpus = 1, max_cpus = 12,  max_memory = 150 },
-		   { gpus = 2, max_cpus = 14, max_memory = 250 },
-		   { gpus = 3, max_cpus = 18, max_memory = 300 },
+		   { gpus = 1, max_cpus = 12,  max_memory = 256 },
+		   { gpus = 2, max_cpus = 14, max_memory = 325 },
+		   { gpus = 3, max_cpus = 18, max_memory = 350 },
 		   { gpus = 4, max_cpus = 20, max_memory = 375 }
    },
 
    v100_pci_2 = { gpu = "v100",
-	     { gpus = 1, max_cpus = 10,  max_memory = 100 },
+	     { gpus = 1, max_cpus = 20,  max_memory = 150 },
 	     --{ gpus = 2, max_cpus = 40, max_memory = 185 }
+   },
+
+   dgx1 = { gpu = "v100",
+	    { gpus = 1, max_cpus = 10,  max_memory = 250 },
+	    { gpus = 2, max_cpus = 15,  max_memory = 300 },
+	    { gpus = 3, max_cpus = 18,  max_memory = 350 },
+	    { gpus = 4, max_cpus = 20,  max_memory = 400 },
+	    { gpus = 5, max_cpus = 30,  max_memory = 425 },
+	    { gpus = 6, max_cpus = 35,  max_memory = 450 },
+	    { gpus = 7, max_cpus = 38,  max_memory = 475 },
+	    { gpus = 8, max_cpus = 40,  max_memory = 500 },
+   },
+
+   v100_sxm2_4_2 = { gpu = "v100",
+		     { gpus = 1, max_cpus = 16,  max_memory = 256 },
+		     { gpus = 2, max_cpus = 20, max_memory = 325 },
+		     { gpus = 3, max_cpus = 36, max_memory = 350 },
+		     { gpus = 4, max_cpus = 40, max_memory = 375 },
+		     max_time = princeUtils.hours_to_mins(12)
    },
 
    mhealth = { gpu = "p1080",
@@ -86,12 +106,20 @@ local partition_configures = {
 	     { gpus = 4, max_cpus = 28, max_memory = 250 },
 	     users = princeStakeholders.cns_wang_users 
    },
+   
+   simoncelli_gpu = { gpu = "v100",
+		      { gpus = 1, max_cpus = 16,  max_memory = 256 },
+		      { gpus = 2, max_cpus = 20, max_memory = 325 },
+		      { gpus = 3, max_cpus = 36, max_memory = 350 },
+		      { gpus = 4, max_cpus = 40, max_memory = 375 },
+		      users = princeStakeholders.simoncelli_users
+   },
 }
 
-local partitions = { "xwang_gpu", "mhealth",
+local partitions = { "xwang_gpu", "simoncelli_gpu", "mhealth",
 		     "p40_4", "p1080_4", "p100_4",
-		     "v100_pci_2", "v100_sxm2_4",
-		     "k80_8", "k80_4" }
+		     "v100_pci_2", "v100_sxm2_4", "dgx1", 
+		     "k80_8", "k80_4", "v100_sxm2_4_2" }
 
 local function gpu_type_is_valid(gpu_type)
    if gpu_type == nil then return true end
@@ -169,6 +197,11 @@ local function fit_into_partition(part_name)
          not princeUtils.in_table(partition_conf.users, princeUsers.nyu_netid()) then
 	    return false
       end
+
+      if partition_conf.max_time ~= nil and wall_time > partition_conf.max_time then
+	 return false
+      end
+      
       local conf = partition_conf[gpus]
       if conf ~= nil and cpus <= conf.max_cpus and memory <= conf.max_memory then
 	 return true
@@ -219,6 +252,8 @@ local function setup_parameters(args)
    cpus = args.cpus or 1
    memory = args.memory/1024 or 2 -- in GB
    gpu_type = args.gpu_type or nil
+   wall_time = args.wall_time
+   -- slurm_log("wall_time: %d", wall_time)
 end
 
 -- exported functions

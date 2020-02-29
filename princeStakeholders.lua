@@ -17,20 +17,26 @@ local mhealth_users = { "apd283", "kz918", "nn1119", "sb6065",
 
 local kussell_users = { "elk2", "ml3365", "tn49", "as8805", "shg325" }
 
-local users_with_unlimited_wall_time = { "sw77" }
+local simoncelli_users = { "eps2", "zk388", "klb11", "pef246", "tdo1",
+                           "jyz205", "pl1465", "hl1239", "ld1950",  "cjb617",
+                           "ch2880", "np1742", "wfb229" }
+
+
+local users_with_unlimited_wall_time = { "sw77", "scm506" }
 
 local test_users = { "wang", "sw77", "deng", "wd35" }
 
 -- users to request more than 1 GPU node per job
 local special_gpu_users = { "wang", "fm78" }
 
-local blocked_netids = { "jrc63" }
+local blocked_netids = { }
 
 -- data
 
 princeStakeholders.cns_wang_users = cns_wang_users
 princeStakeholders.mhealth_users = mhealth_users
 princeStakeholders.kussell_users = kussell_users
+princeStakeholders.simoncelli_users = simoncelli_users
 princeStakeholders.test_users = test_users
 princeStakeholders.users_with_unlimited_wall_time = users_with_unlimited_wall_time
 princeStakeholders.blocked_netids = blocked_netids
@@ -39,5 +45,4 @@ princeStakeholders.special_gpu_users = special_gpu_users
 slurm_log("To load princeStakeholders.lua")
 
 return princeStakeholders
-
 
