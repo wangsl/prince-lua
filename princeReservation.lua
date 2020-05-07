@@ -234,6 +234,53 @@ local function check_reservation_zhang_is_OK()
    return true
 end
 
+local function check_reservation_cds_courses_is_OK()
+   local res_name = "cds-courses"
+   slurm_log("Reservation: %s", res_name)
+
+   if job_desc.reservation ~= res_name then return false end
+   
+   if job_desc.min_nodes ~= uint32_NO_VAL then
+      if job_desc.min_nodes ~= 1 then
+	 user_log("Reservation cds-courses: please specify: --nodes=1")
+	 return false
+      end
+   end
+   
+   if job_desc.time_limit > 240 then
+      user_log("Reservation cds-courses: time limit 240 mins")
+      return false
+   end
+
+   --[[
+   if job_desc.shared ~= 0 then
+      user_log("Reservation: please specify: --exclusive")
+      return false
+   end
+   --]]
+   
+   if job_desc.gres == nil then return false end
+   
+   if job_desc.gres ~= "gpu:k80:4" and job_desc.gres ~= "gpu:p40:4"   then
+      user_log("Reservation cds-courses: --gres=gpu:k80:4 or --gres=gpu:p40:4")
+      return false
+   end
+   
+   if memory_is_specified(job_desc.pn_min_memory) and job_desc.pn_min_memory > 250*1024 then
+      user_log("Reservation cds-courses: maximum memory for GPU only job is 250GB")
+      return false
+   end
+   
+   if job_desc.cpus_per_task ~= uint16_NO_VAL then
+      if job_desc.cpus_per_task ~= 28 then
+	 user_log("Reservation cds-courses: --cpus-per-task=28")
+	 return false
+      end
+   end
+   
+   return true
+end
+
 local function check_reservation_is_OK(job_desc_)
    job_desc = job_desc_
 
@@ -244,6 +291,8 @@ local function check_reservation_is_OK(job_desc_)
    if job_desc.reservation == "chung" then return check_reservation_chung_is_OK() end
 
    if job_desc.reservation == "zhang" then return check_reservation_zhang_is_OK() end
+
+   if job_desc.reservation == "cds-courses" then return check_reservation_cds_courses_is_OK() end
    
    return true
 end
